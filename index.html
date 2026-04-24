@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bisnis Digital 2025 | Politeknik Negeri Jember</title>
+  <meta name="description" content="Website resmi Angkatan 2025 Program Studi Bisnis Digital Politeknik Negeri Jember">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    body { overflow:hidden; }
+    .landing-page { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; position:relative; z-index:1; }
+    .landing-logo { width:160px;height:160px;border-radius:24px;object-fit:contain;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:1rem;margin-bottom:2.5rem;animation:logoFloat 3s ease-in-out infinite; }
+    .landing-logo-placeholder { width:160px;height:160px;border-radius:24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:4rem;font-weight:900;color:rgba(255,255,255,0.3);margin-bottom:2.5rem;animation:logoFloat 3s ease-in-out infinite; }
+    @keyframes logoFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .landing-prodi { font-size:clamp(1rem,2.5vw,1.1rem);font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem; }
+    .landing-title { font-size:clamp(2.5rem,8vw,5.5rem);font-weight:900;letter-spacing:-0.03em;line-height:1;color:#fff;margin-bottom:0.6rem;animation:fadeSlideUp 0.8s ease forwards; }
+    .landing-year { font-size:clamp(1.5rem,5vw,3rem);font-weight:300;letter-spacing:0.3em;color:rgba(255,255,255,0.35);margin-bottom:2.5rem;animation:fadeSlideUp 0.8s ease 0.15s forwards;opacity:0; }
+    @keyframes fadeSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .landing-btn { display:inline-flex;align-items:center;gap:0.8rem;padding:16px 48px;background:#fff;color:#0a0a0a;font-family:'Inter',sans-serif;font-size:1rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;border:none;border-radius:50px;cursor:pointer;text-decoration:none;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);animation:fadeSlideUp 0.8s ease 0.3s forwards;opacity:0;box-shadow:0 0 40px rgba(255,255,255,0.15); }
+    .landing-btn:hover { transform:scale(1.06);box-shadow:0 0 60px rgba(255,255,255,0.3); }
+    .landing-btn:hover svg { transform:translateX(4px); }
+    .landing-btn svg { transition:transform 0.3s ease; }
+    .landing-dots { position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;gap:6px; }
+    .landing-dot { width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.3); }
+    .landing-dot.active { background:rgba(255,255,255,0.8); }
+    .bg-landing { position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden; }
+    .bg-landing img { width:70vmin;max-width:600px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;filter:grayscale(1) blur(2px);pointer-events:none; }
+    .bg-landing .no-bg { position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40vw;font-weight:900;color:rgba(255,255,255,0.025);letter-spacing:-0.05em;pointer-events:none;user-select:none; }
+    /* Login button landing */
+    .landing-login-btn { position:fixed;top:1.2rem;right:1.2rem;z-index:10;font-size:0.72rem;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.15);padding:5px 12px;border-radius:16px;text-decoration:none;white-space:nowrap;transition:all 0.2s; }
+    .landing-login-btn:hover { color:var(--white);border-color:rgba(255,255,255,0.35); }
+    .landing-login-btn.admin { color:rgba(255,180,50,0.95);border-color:rgba(255,180,50,0.35);background:rgba(255,180,50,0.08); }
+  </style>
+</head>
+<body>
+<div class="bg-landing" id="bgLanding">
+  <div class="no-bg" id="bgText">BD</div>
+</div>
+
+<!-- Auth badge -->
+<a href="login.html" class="landing-login-btn" id="authBtn">🔐 Login</a>
+
+<main class="landing-page">
+  <div id="logoArea"><div class="landing-logo-placeholder" id="logoPlaceholder">BD</div></div>
+  <p class="landing-prodi">Prodi</p>
+  <h1 class="landing-title">Bisnis Digital</h1>
+  <p class="landing-year">2025</p>
+  <a href="dashboard.html" class="landing-btn">
+    Visit
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+  <div class="landing-dots">
+    <div class="landing-dot active"></div>
+    <div class="landing-dot"></div>
+    <div class="landing-dot"></div>
+  </div>
+</main>
+
+<div id="toast-container"></div>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+  // Auth badge
+  const authBtn = document.getElementById('authBtn');
+  if (wha_isAdmin()) {
+    authBtn.textContent = '🔓 Admin';
+    authBtn.className = 'landing-login-btn admin';
+    authBtn.href = '#';
+    authBtn.onclick = (e) => { e.preventDefault(); wha_logout(); };
+  }
+
+  WHAStorage.getSiteData().then(site => {
+    const logo = site.logo || '';
+    if (logo) {
+      const src = WHAStorage.resolveImg(logo, 'logo');
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src; img.alt = 'Logo Angkatan'; img.className = 'landing-logo';
+        img.onload = () => {
+          document.getElementById('logoPlaceholder').replaceWith(img);
+          const bgImg = document.createElement('img');
+          bgImg.src = src; bgImg.alt = '';
+          document.getElementById('bgText').replaceWith(bgImg);
+        };
+      }
+    }
+    const bgLandingBg = (site.backgrounds || {}).dashboard || '';
+    if (bgLandingBg) {
+      const bgSrc = WHAStorage.resolveImg(bgLandingBg, 'backgrounds');
+      if (bgSrc) document.querySelector('.bg-landing').style.backgroundImage = `url('${bgSrc}')`;
+    }
+  });
+</script>
+</body>
+</html>
