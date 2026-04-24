@@ -1,0 +1,191 @@
+[
+    {
+        "id": 1,
+        "absen": 1,
+        "nim": "I43252567",
+        "nama": "Fera Safira",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": "Ketua Golongan D"
+    },
+    {
+        "id": 2,
+        "absen": 2,
+        "nim": "I43252580",
+        "nama": "Moh. Januar Ferdiansyah Putra",
+        "foto": "",
+        "is_pengurus": true,
+        "jabatan_pengurus": "Ketua Golongan D"
+    },
+    {
+        "id": 3,
+        "absen": 3,
+        "nim": "I43252605",
+        "nama": "Qonita Husna Zahida",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 4,
+        "absen": 4,
+        "nim": "I43252609",
+        "nama": "Zakia Fadol Tamami Al Mabrur",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 5,
+        "absen": 5,
+        "nim": "I43252624",
+        "nama": "Fadillah Ahmad Frizzy",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 6,
+        "absen": 6,
+        "nim": "I43252632",
+        "nama": "Muhammad Ilham Suciyanto",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 7,
+        "absen": 7,
+        "nim": "I43252645",
+        "nama": "Nuraini Rizka Ramadhani",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 8,
+        "absen": 8,
+        "nim": "I43252704",
+        "nama": "Sarah Banowati",
+        "foto": "",
+        "is_pengurus": true,
+        "jabatan_pengurus": "Wakil Ketua Angkatan"
+    },
+    {
+        "id": 9,
+        "absen": 9,
+        "nim": "I43252716",
+        "nama": "Gratia Kristo Telaumbanua",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 10,
+        "absen": 10,
+        "nim": "I43252741",
+        "nama": "Kevin Aditya Saputra",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 11,
+        "absen": 11,
+        "nim": "I43252839",
+        "nama": "Magfirah Rahmatika",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 12,
+        "absen": 12,
+        "nim": "I43252875",
+        "nama": "Bagas Prama Ananta",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 13,
+        "absen": 13,
+        "nim": "I43252969",
+        "nama": "Moh Wee Kend Priojatniko",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 14,
+        "absen": 14,
+        "nim": "I43252980",
+        "nama": "Chinta Rahma Dania",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 15,
+        "absen": 15,
+        "nim": "I43253010",
+        "nama": "Muhammad Mahsum Farhani",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 16,
+        "absen": 16,
+        "nim": "I43253104",
+        "nama": "Meri Rotun Hasanah",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 17,
+        "absen": 17,
+        "nim": "I43253111",
+        "nama": "Muhammad Fikri Ihsanul Ahsan",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 18,
+        "absen": 18,
+        "nim": "I43253163",
+        "nama": "Shinta Widya Ningthias",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 19,
+        "absen": 19,
+        "nim": "I43253198",
+        "nama": "Ibnu Suma Abdil Barr",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 20,
+        "absen": 20,
+        "nim": "I43253266",
+        "nama": "Darwis Fayakun",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 21,
+        "absen": 21,
+        "nim": "I43253267",
+        "nama": "Maulana Hudef Basrahil",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    }
+]

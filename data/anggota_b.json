@@ -1,0 +1,200 @@
+[
+    {
+        "id": 1,
+        "absen": 1,
+        "nim": "I43250820",
+        "nama": "Basillius Tirta Adinata",
+        "foto": "",
+        "is_pengurus": true,
+        "jabatan_pengurus": "Ketua Golongan B"
+    },
+    {
+        "id": 2,
+        "absen": 2,
+        "nim": "I43250827",
+        "nama": "Bima Ramadhan",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 3,
+        "absen": 3,
+        "nim": "I43250843",
+        "nama": "Deva Lorenza Br Karo",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 4,
+        "absen": 4,
+        "nim": "I43250858",
+        "nama": "Keisya Rosinta Manalu",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 5,
+        "absen": 5,
+        "nim": "I43250900",
+        "nama": "Meysa Ayu Isni Ifadah",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 6,
+        "absen": 6,
+        "nim": "I43250967",
+        "nama": "Cipluk Jamalia",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 7,
+        "absen": 7,
+        "nim": "I43251006",
+        "nama": "Mochamad Miftahul Rizky Amirullah",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 8,
+        "absen": 8,
+        "nim": "I43251017",
+        "nama": "Teguh Angen Nugraha",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 9,
+        "absen": 9,
+        "nim": "I43251029",
+        "nama": "Jesica Virzhi Alfansa",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 10,
+        "absen": 10,
+        "nim": "I43251032",
+        "nama": "Muhammad Yosi",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 11,
+        "absen": 11,
+        "nim": "I43251042",
+        "nama": "Shafa Natasya Azhra Putri",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 12,
+        "absen": 12,
+        "nim": "I43251049",
+        "nama": "Aprillia Eka Nur Aeni",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 13,
+        "absen": 13,
+        "nim": "I43251046",
+        "nama": "Mochammad Putra Vibah Ali Firdausi",
+        "foto": "",
+        "is_pengurus": true,
+        "jabatan_pengurus": "Bendahara 1"
+    },
+    {
+        "id": 14,
+        "absen": 14,
+        "nim": "I43251063",
+        "nama": "Rifkia Ramadani",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 15,
+        "absen": 14,
+        "nim": "I43251082",
+        "nama": "Aprilia Dara Hartono",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 16,
+        "absen": 16,
+        "nim": "I43251093",
+        "nama": "Hasanuddin",
+        "foto": "",
+        "is_pengurus": true,
+        "jabatan_pengurus": "Ketua Angkatan"
+    },
+    {
+        "id": 17,
+        "absen": 17,
+        "nim": "I43251127",
+        "nama": "Prawira Jaya",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 18,
+        "absen": 18,
+        "nim": "I43251243",
+        "nama": "Hafifatus Sa'diyah",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 19,
+        "absen": 19,
+        "nim": "I43251268",
+        "nama": "Nitha Wulan Sari",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 20,
+        "absen": 20,
+        "nim": "I43251273",
+        "nama": "Lidya Aftiani",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 21,
+        "absen": 21,
+        "nim": "I43251278",
+        "nama": "Samuel Christian Tondang",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    },
+    {
+        "id": 22,
+        "absen": 22,
+        "nim": "I43251314",
+        "nama": "Imelda Sheyra Maylany Putri",
+        "foto": "",
+        "is_pengurus": false,
+        "jabatan_pengurus": ""
+    }
+]

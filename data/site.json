@@ -1,0 +1,47 @@
+{
+    "logo": "logo_angkatan_1776054245.jpg",
+    "motto": "We Are The Leader, Success Together",
+    "instagram": "https://www.instagram.com/digibiz.2025?igsh=MTA1enNxZXhyOHFrYg==",
+    "youtube": "https://youtube.com/@bisnisdigital25?si=4pBoGO_h8xypT6EP",
+    "tiktok": "https://www.tiktok.com/@digibiz.2025?is_from_webapp=1&sender_device=pc",
+    "backgrounds": {
+        "dashboard": "bg_dashboard_69e1ab95cf082.jpg",
+        "pengurus": "bg_pengurus_69e1b6948b0d5.jpg",
+        "anggota": "bg_anggota_69e1a0bd3340e.jpg",
+        "anggota_a": "bg_anggota_a_69e1b4500f3b9.jpg",
+        "anggota_b": "bg_anggota_b_69e1b34b2fc9d.jpg",
+        "anggota_c": "bg_anggota_c_69e1b2d035ca1.jpg",
+        "anggota_d": "bg_anggota_d_69e1b2b3d369e.jpg",
+        "foto": "bg_foto_69e1a9c763d61.jpg",
+        "projek": "bg_projek_69e1a9dd4c6e6.jpg"
+    },
+    "golongan_foto": {
+        "a": "gol_a_69e1b4ded9577.jpg",
+        "b": "gol_b_69e1b33dddedf.jpg",
+        "c": "gol_c_69e1b51040a29.jpg",
+        "d": "gol_d_69e1b2be5cd18.jpg"
+    },
+    "descriptions": [
+        {
+            "id": 1,
+            "title": "Sejarah Prodi Bisnis Digital — Politeknik Negeri Jember",
+            "content": "Program Studi Bisnis Digital merupakan salah satu program studi di bawah naungan Jurusan Bisnis Politeknik Negeri Jember. Program studi ini hadir untuk menjawab kebutuhan industri akan tenaga ahli di bidang bisnis berbasis teknologi digital. Dengan kurikulum yang terus dikembangkan sesuai kebutuhan industri 4.0, Bisnis Digital Politeknik Negeri Jember berkomitmen menghasilkan lulusan yang kompeten, adaptif, dan siap bersaing di era digital."
+        },
+        {
+            "id": 2,
+            "title": "Sejarah Angkatan 2025",
+            "content": "Angkatan 2025 Prodi Bisnis Digital adalah generasi mahasiswa yang resmi bergabung pada tahun akademik 2025/2026. Angkatan ini terdiri dari empat golongan (A, B, C, D) dan merupakan angkatan yang penuh semangat dalam menghadapi tantangan era digital. Dengan tekad kuat untuk berprestasi, Angkatan 2025 siap membawa nama baik Prodi Bisnis Digital Politeknik Negeri Jember ke tingkat yang lebih tinggi."
+        },
+        {
+            "id": 3,
+            "title": "Filosofi Logo Angkatan",
+            "content": "Logo Angkatan 2025 Bisnis Digital dirancang dengan penuh makna. Setiap elemen visual mencerminkan semangat, kreativitas, dan tekad angkatan ini dalam menjalani perjalanan akademik. Warna-warna yang dipilih melambangkan keberanian dan inovasi, sementara bentuk logo mencerminkan kebersamaan dan persatuan seluruh anggota Angkatan 2025."
+        },
+        {
+            "id": 4,
+            "title": "Visi Misi Angkatan",
+            "content": "Angkatan 2025 terdiri dari 4 Golongan (A, B, C, D) dengan anggota aktif. Dipimpin oleh pengurus yang terpilih melalui musyawarah bersama. Angkatan 2025 aktif dalam kegiatan akademik, sosial, dan organisasi kemahasiswaan di lingkungan Politeknik Negeri Jember."
+        }
+    ],
+    "foto_angkatan": "angkatan_1776754067.jpg"
+}

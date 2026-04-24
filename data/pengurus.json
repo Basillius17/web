@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "jabatan": "Ketua Angkatan",
+        "nama": "Hasanuddin",
+        "foto": "",
+        "order": 1
+    },
+    {
+        "id": 2,
+        "jabatan": "Wakil Ketua Angkatan",
+        "nama": "Sarah Banowati",
+        "foto": "",
+        "order": 2
+    },
+    {
+        "id": 3,
+        "jabatan": "Bendahara 1",
+        "nama": "Mochammad Putra Vibah Ali Firdausi",
+        "foto": "",
+        "order": 3
+    },
+    {
+        "id": 4,
+        "jabatan": "Bendahara 2",
+        "nama": "Fitria Inta Dwi Nurviana",
+        "foto": "",
+        "order": 4
+    },
+    {
+        "id": 5,
+        "jabatan": "Admin 1",
+        "nama": "Rofiatun Hasanah",
+        "foto": "",
+        "order": 5
+    },
+    {
+        "id": 6,
+        "jabatan": "Admin 2",
+        "nama": "Aurella Meidista Septiasa",
+        "foto": "",
+        "order": 6
+    },
+    {
+        "id": 7,
+        "jabatan": "Admin 3",
+        "nama": "Sari' Sadida",
+        "foto": "",
+        "order": 7
+    },
+    {
+        "id": 8,
+        "jabatan": "Ketua Golongan A",
+        "nama": "Ahmad Fauzen Alfarosi",
+        "foto": "",
+        "order": 8
+    },
+    {
+        "id": 9,
+        "jabatan": "Ketua Golongan B",
+        "nama": "Basillius Tirta Adinata",
+        "foto": "img_69e1b58ccaec8.jpg",
+        "order": 9
+    },
+    {
+        "id": 10,
+        "jabatan": "Ketua Golongan C",
+        "nama": "Prayu Kiyat Nurwulandri",
+        "foto": "",
+        "order": 10
+    },
+    {
+        "id": 11,
+        "jabatan": "Ketua Golongan D",
+        "nama": "Moh. Januar Ferdiansyah Putra",
+        "foto": "",
+        "order": 11
+    },
+    {
+        "id": 12,
+        "jabatan": "Sekretaris 1",
+        "nama": "Sarah Banowati",
+        "foto": "",
+        "order": 12
+    }
+]
