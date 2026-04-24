@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengurus Angkatan | Bisnis Digital 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .org-tree{max-width:900px;margin:0 auto;}
+    .org-level{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+    .org-card{width:150px;min-height:180px;background:var(--black-3);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;display:flex;flex-direction:column;align-items:center;gap:0.8rem;position:relative;transition:var(--transition);}
+    .org-card:hover{border-color:var(--border-hover);transform:translateY(-2px);}
+    .org-card .avatar{width:76px;height:76px;border-radius:14px;background:var(--gray-dark);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+    .org-card .avatar img{width:100%;height:100%;object-fit:cover;}
+    .org-card .avatar-placeholder{font-size:1.6rem;color:var(--gray-mid);}
+    .jabatan-tag{font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray-mid);text-align:center;padding:0 0.3rem;}
+    .org-card .edit-btn{position:absolute;top:6px;right:6px;background:var(--gray-dark);border:1px solid var(--border);color:var(--gray-light);width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.7rem;transition:var(--transition);}
+    .org-card .edit-btn:hover{color:var(--white);background:var(--gray);}
+    .level-separator{height:28px;display:flex;align-items:center;justify-content:center;}
+    .level-separator::before{content:'';display:block;width:2px;height:100%;background:rgba(255,255,255,0.08);}
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a class="brand" href="index.html">BD <span class="year-badge">2025</span></a>
+    <span class="navbar-subtitle">Bisnis Digital &middot; Jurusan Bisnis<br>Politeknik Negeri Jember</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.5rem;" id="navRight">
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <nav id="navMenu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="pengurus.html" class="active">Pengurus</a>
+    <a href="anggota.html">Anggota</a>
+    <a href="foto.html">Foto</a>
+    <a href="projek.html">Projek</a>
+  </nav>
+</nav>
+
+<div class="page-wrapper">
+  <div class="section">
+    <div class="flex-between mb-3">
+      <div>
+        <p class="section-label">Struktur</p>
+        <h1 class="page-title">Pengurus Angkatan</h1>
+        <p class="page-subtitle">Angkatan 2025 &middot; Bisnis Digital &middot; Politeknik Negeri Jember</p>
+      </div>
+      <button class="btn btn-white" id="btnTambah" style="display:none;" onclick="openModal('modalTambah')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tambah Pengurus
+      </button>
+    </div>
+    <div class="org-tree" id="orgTree">
+      <div style="text-align:center;padding:4rem;color:var(--gray-mid);"><p>⏳ Memuat data pengurus...</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Tambah Pengurus -->
+<div class="modal-overlay" id="modalTambah">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalTambah')">&times;</div>
+    <h2 class="modal-title">Tambah Pengurus</h2>
+    <form id="formTambah" enctype="multipart/form-data">
+      <div class="form-group">
+        <label class="form-label">Jabatan</label>
+        <select id="tambahJabatan" class="form-control" required>
+          <option value="">-- Pilih Jabatan --</option>
+          <option>Ketua Angkatan</option><option>Wakil Ketua Angkatan</option>
+          <option>Sekretaris 1</option><option>Sekretaris 2</option>
+          <option>Bendahara 1</option><option>Bendahara 2</option>
+          <option>Admin 1</option><option>Admin 2</option><option>Admin 3</option>
+          <option>Ketua Golongan A</option><option>Ketua Golongan B</option>
+          <option>Ketua Golongan C</option><option>Ketua Golongan D</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" id="tambahNama" class="form-control" placeholder="Nama pengurus..." required></div>
+      <div class="form-group">
+        <label class="form-label">Foto (Opsional)</label>
+        <div class="file-input-wrapper"><input type="file" id="tambahFoto" accept="image/*" onchange="previewImage(this,'prevTambah')"></div>
+        <img id="prevTambah" style="display:none;margin-top:8px;max-height:100px;border-radius:8px;" alt="">
+      </div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalTambah')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnSaveTambah">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Edit Pengurus -->
+<div class="modal-overlay" id="modalEdit">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalEdit')">&times;</div>
+    <h2 class="modal-title">Edit Pengurus</h2>
+    <form id="formEdit">
+      <input type="hidden" id="editId">
+      <div class="form-group">
+        <label class="form-label">Jabatan</label>
+        <select id="editJabatan" class="form-control" required>
+          <option>Ketua Angkatan</option><option>Wakil Ketua Angkatan</option>
+          <option>Sekretaris 1</option><option>Sekretaris 2</option>
+          <option>Bendahara 1</option><option>Bendahara 2</option>
+          <option>Admin 1</option><option>Admin 2</option><option>Admin 3</option>
+          <option>Ketua Golongan A</option><option>Ketua Golongan B</option>
+          <option>Ketua Golongan C</option><option>Ketua Golongan D</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" id="editNama" class="form-control" required></div>
+      <div class="form-group">
+        <label class="form-label">Ganti Foto (Opsional)</label>
+        <div class="file-input-wrapper"><input type="file" id="editFoto" accept="image/*" onchange="previewImage(this,'prevEdit')"></div>
+        <img id="prevEdit" style="display:none;margin-top:8px;max-height:100px;border-radius:8px;" alt="">
+      </div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-danger" onclick="hapusPengurus()">Hapus</button>
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalEdit')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnSaveEdit">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+const LEVEL_ORDER = ['Ketua Angkatan','Wakil Ketua Angkatan','Sekretaris','Bendahara','Admin','Ketua Golongan'];
+const LEVEL_LABELS = {'Ketua Angkatan':'Ketua Angkatan','Wakil Ketua Angkatan':'Wakil Ketua Angkatan','Sekretaris':'Sekretaris','Bendahara':'Bendahara','Admin':'Admin Angkatan','Ketua Golongan':'Ketua Golongan'};
+
+function getLevel(j) {
+  if (j==='Ketua Angkatan') return 'Ketua Angkatan';
+  if (j==='Wakil Ketua Angkatan') return 'Wakil Ketua Angkatan';
+  if (j.startsWith('Sekretaris')) return 'Sekretaris';
+  if (j.startsWith('Bendahara')) return 'Bendahara';
+  if (j.startsWith('Admin')) return 'Admin';
+  if (j.startsWith('Ketua Golongan')) return 'Ketua Golongan';
+  return 'Lainnya';
+}
+
+let _pengurus = [], _isAdmin = false;
+
+async function loadPage() {
+  _isAdmin = await wha_initPage('pengurus');
+  if (_isAdmin) document.getElementById('btnTambah').style.display = '';
+  _pengurus = await WHAStorage.getPengurus();
+  renderOrg(_pengurus);
+}
+
+function renderOrg(data) {
+  const levels = {};
+  LEVEL_ORDER.forEach(l => levels[l] = []);
+  data.forEach(p => { const lv = getLevel(p.jabatan); if (levels[lv]) levels[lv].push(p); });
+
+  let html = '';
+  let first = true;
+  LEVEL_ORDER.forEach(lv => {
+    if (!levels[lv].length) return;
+    if (!first) html += '<div class="level-separator"></div>';
+    first = false;
+    html += `<div class="level-block" style="margin-bottom:0;">
+      <p class="org-level-label">${LEVEL_LABELS[lv]}</p>
+      <div class="org-level">${levels[lv].map(orgCardHtml).join('')}</div>
+    </div>`;
+  });
+
+  if (!html) html = `<div style="text-align:center;padding:4rem;color:var(--gray-mid);"><div style="font-size:3rem;margin-bottom:1rem;">👥</div><p>Belum ada data pengurus.</p></div>`;
+  document.getElementById('orgTree').innerHTML = html;
+}
+
+function orgCardHtml(p) {
+  const fotoSrc = p.foto ? WHAStorage.resolveImg(p.foto, 'pengurus') : null;
+  const avatarContent = fotoSrc
+    ? `<img src="${fotoSrc}" alt="${escHtml(p.nama)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="width:100%;height:100%;object-fit:cover;">
+       <div class="avatar-placeholder" style="display:none;">${(p.nama||'?')[0].toUpperCase()}</div>`
+    : `<div class="avatar-placeholder">${(p.nama||'?')[0].toUpperCase()}</div>`;
+  const avatarClick = fotoSrc ? `onclick="openLightbox('${fotoSrc}')" style="cursor:pointer;"` : '';
+
+  return `<div class="org-card fade-in">
+    ${_isAdmin ? `<button class="edit-btn" onclick="openEditPengurus(${p.id})" title="Edit">✏️</button>` : ''}
+    <div class="avatar avatar-lg" ${avatarClick}>${avatarContent}</div>
+    <div class="jabatan-tag">${escHtml(p.jabatan)}</div>
+    <div class="nama">${escHtml(p.nama||'—')}</div>
+  </div>`;
+}
+
+// ---- ADMIN ACTIONS ----
+
+// Tambah
+document.getElementById('formTambah').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveTambah');
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+
+  const newId = await WHAStorage.nextPengurusId();
+  const newP = { id: newId, jabatan: document.getElementById('tambahJabatan').value, nama: document.getElementById('tambahNama').value.trim(), foto: '', order: newId };
+
+  const fotoFile = document.getElementById('tambahFoto').files[0];
+  if (fotoFile) {
+    const b64 = await WHAStorage.fileToB64(fotoFile);
+    const key = 'peng_foto_' + newId;
+    if (WHAStorage.setImg(key, b64)) newP.foto = 'ls:' + key;
+  }
+
+  const arr = await WHAStorage.getPengurus();
+  arr.push(newP);
+  await WHAStorage.savePengurus(arr);
+  _pengurus = arr;
+
+  showToast('Pengurus ditambahkan!');
+  closeModal('modalTambah');
+  this.reset(); document.getElementById('prevTambah').style.display = 'none';
+  btn.disabled = false; btn.textContent = 'Simpan';
+  renderOrg(_pengurus);
+});
+
+// Open edit
+function openEditPengurus(id) {
+  const p = _pengurus.find(x => x.id == id);
+  if (!p) return;
+  document.getElementById('editId').value = p.id;
+  document.getElementById('editNama').value = p.nama;
+  document.getElementById('editJabatan').value = p.jabatan;
+  document.getElementById('prevEdit').style.display = 'none';
+  openModal('modalEdit');
+}
+
+// Save edit
+document.getElementById('formEdit').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveEdit');
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+  const id = parseInt(document.getElementById('editId').value);
+  const arr = await WHAStorage.getPengurus();
+  const idx = arr.findIndex(x => x.id == id);
+  if (idx === -1) return;
+
+  arr[idx].jabatan = document.getElementById('editJabatan').value;
+  arr[idx].nama = document.getElementById('editNama').value.trim();
+
+  const fotoFile = document.getElementById('editFoto').files[0];
+  if (fotoFile) {
+    const b64 = await WHAStorage.fileToB64(fotoFile);
+    const key = 'peng_foto_' + id;
+    if (WHAStorage.setImg(key, b64)) arr[idx].foto = 'ls:' + key;
+  }
+
+  await WHAStorage.savePengurus(arr);
+  _pengurus = arr;
+  showToast('Data diupdate!');
+  closeModal('modalEdit');
+  btn.disabled = false; btn.textContent = 'Update';
+  renderOrg(_pengurus);
+});
+
+// Hapus
+async function hapusPengurus() {
+  const id = parseInt(document.getElementById('editId').value);
+  confirmDelete('Yakin ingin menghapus pengurus ini?', async () => {
+    const arr = (await WHAStorage.getPengurus()).filter(x => x.id != id);
+    WHAStorage.delImg('peng_foto_' + id);
+    await WHAStorage.savePengurus(arr);
+    _pengurus = arr;
+    closeModal('modalEdit');
+    showToast('Pengurus dihapus!');
+    renderOrg(_pengurus);
+  });
+}
+
+loadPage();
+</script>
+</body>
+</html>

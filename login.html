@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin | Bisnis Digital 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; overflow:hidden; }
+    .login-bg {
+      position:fixed; inset:0; z-index:0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 80%, rgba(255,255,255,0.02) 0%, transparent 50%);
+    }
+    .login-card {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 420px;
+      background: var(--black-2);
+      border: 1px solid var(--border-hover);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      animation: loginIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    @keyframes loginIn {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .login-brand {
+      text-align: center; margin-bottom: 2rem;
+    }
+    .login-brand .logo-circle {
+      width: 72px; height: 72px; border-radius: 18px;
+      background: var(--gray-dark); border: 1px solid var(--border);
+      display: inline-flex; align-items:center; justify-content:center;
+      font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem;
+      color: var(--white);
+    }
+    .login-brand h1 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .login-brand p { font-size: 0.78rem; color: var(--gray-mid); }
+    .input-group { position:relative; margin-bottom: 1.2rem; }
+    .input-group label {
+      display:block; font-size:0.78rem; font-weight:600;
+      color:var(--gray-light); margin-bottom:0.4rem; letter-spacing:0.03em;
+    }
+    .input-group input {
+      width:100%; background:var(--black-3);
+      border:1px solid var(--border); border-radius:10px;
+      padding:12px 16px; color:var(--white);
+      font-family:'Inter',sans-serif; font-size:0.9rem;
+      outline:none; transition:var(--transition);
+    }
+    .input-group input:focus { border-color:var(--border-hover); background:var(--gray-dark); }
+    .btn-login {
+      width:100%; padding:14px; background:var(--white); color:var(--black);
+      border:none; border-radius:10px; font-family:'Inter',sans-serif;
+      font-size:0.95rem; font-weight:700; cursor:pointer;
+      transition:var(--transition); letter-spacing:0.04em;
+      margin-top:0.5rem;
+    }
+    .btn-login:hover { background:var(--pure-white); transform:translateY(-1px); box-shadow:0 4px 20px rgba(255,255,255,0.15); }
+    .btn-login:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+    .login-error {
+      background:rgba(255,107,107,0.1); border:1px solid rgba(255,107,107,0.35);
+      color:#ff9999; border-radius:8px; padding:10px 14px;
+      font-size:0.82rem; margin-bottom:1rem; display:none;
+    }
+    .back-link {
+      display:block; text-align:center; margin-top:1.2rem;
+      font-size:0.78rem; color:var(--gray-mid); text-decoration:none;
+      transition:var(--transition);
+    }
+    .back-link:hover { color:var(--white); }
+    .input-toggle {
+      position:absolute; right:12px; bottom:13px;
+      background:none; border:none; color:var(--gray-mid);
+      cursor:pointer; font-size:1rem; padding:0;
+    }
+  </style>
+</head>
+<body>
+<div class="login-bg"></div>
+
+<div class="login-card">
+  <div class="login-brand">
+    <div class="logo-circle" id="logoIcon">BD</div>
+    <h1>Login Admin</h1>
+    <p>Bisnis Digital 2025 &middot; Politeknik Negeri Jember</p>
+  </div>
+
+  <div class="login-error" id="loginError">Username atau password salah!</div>
+
+  <form id="formLogin" autocomplete="off">
+    <div class="input-group">
+      <label for="inputUser">Username</label>
+      <input type="text" id="inputUser" placeholder="Masukkan username..." autocomplete="username" required>
+    </div>
+    <div class="input-group">
+      <label for="inputPass">Password</label>
+      <input type="password" id="inputPass" placeholder="Masukkan password..." autocomplete="current-password" required>
+      <button type="button" class="input-toggle" id="togglePass" title="Tampilkan password">👁️</button>
+    </div>
+    <button type="submit" class="btn-login" id="btnLogin">Masuk →</button>
+  </form>
+
+  <a href="index.html" class="back-link">← Kembali ke Beranda</a>
+</div>
+
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+  // Redirect jika sudah login
+  if (wha_isAdmin()) {
+    const r = new URLSearchParams(window.location.search).get('redirect');
+    window.location.href = r || 'dashboard.html';
+  }
+
+  // Load logo
+  WHAStorage.getSiteData().then(site => {
+    if (site.logo) {
+      const src = WHAStorage.resolveImg(site.logo, 'logo');
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.style.cssText = 'width:72px;height:72px;object-fit:contain;border-radius:14px;';
+        img.onerror = () => {};
+        img.onload = () => {
+          const ic = document.getElementById('logoIcon');
+          ic.innerHTML = '';
+          ic.style.background = 'none';
+          ic.style.border = 'none';
+          ic.appendChild(img);
+        };
+      }
+    }
+  });
+
+  // Toggle password
+  document.getElementById('togglePass').addEventListener('click', function () {
+    const inp = document.getElementById('inputPass');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    this.textContent = inp.type === 'password' ? '👁️' : '🙈';
+  });
+
+  // Form submit
+  document.getElementById('formLogin').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const btn = document.getElementById('btnLogin');
+    btn.disabled = true; btn.textContent = 'Memeriksa...';
+    const user = document.getElementById('inputUser').value.trim();
+    const pass = document.getElementById('inputPass').value;
+
+    setTimeout(() => {
+      if (wha_login(user, pass)) {
+        btn.textContent = '✓ Berhasil!';
+        btn.style.background = '#4ade80';
+        const r = new URLSearchParams(window.location.search).get('redirect');
+        setTimeout(() => { window.location.href = r || 'dashboard.html'; }, 600);
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Masuk →';
+        document.getElementById('inputPass').value = '';
+        document.getElementById('inputPass').focus();
+      }
+    }, 400);
+  });
+</script>
+</body>
+</html>

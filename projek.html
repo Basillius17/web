@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projek Angkatan | BD 2025</title>
+  <meta name="description" content="Projek dan karya Angkatan Bisnis Digital 2025">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.8rem;}
+    @media(max-width:600px){.photo-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}}
+    .photo-item{aspect-ratio:1;position:relative;border-radius:10px;overflow:hidden;background:var(--black-3);border:1px solid var(--border);cursor:pointer;}
+    .photo-item img{width:100%;height:100%;object-fit:cover;transition:var(--transition);}
+    .photo-item:hover img{transform:scale(1.05);}
+    .photo-item .photo-judul{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 100%);color:#fff;font-size:0.68rem;padding:6px 6px 5px;line-height:1.3;pointer-events:none;}
+    .photo-delete{position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,100,100,0.4);color:#ff6b6b;width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.7rem;opacity:0;transition:opacity 0.2s;}
+    .photo-item:hover .photo-delete{opacity:1;}
+    .file-list-title{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.8rem;}
+    .file-item{display:flex;align-items:center;gap:0.8rem;background:var(--black-3);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;margin-bottom:0.5rem;transition:var(--transition);}
+    .file-item:hover{border-color:var(--border-hover);}
+    .file-icon{font-size:1.4rem;flex-shrink:0;}
+    .file-info{flex:1;min-width:0;}
+    .file-judul{font-size:0.88rem;font-weight:600;color:var(--white-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .file-meta{font-size:0.72rem;color:var(--gray-mid);margin-top:2px;}
+    .file-actions{display:flex;gap:0.4rem;flex-shrink:0;}
+    .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:2rem;}
+    @media(max-width:600px){.video-grid{grid-template-columns:1fr;}}
+    .video-item{position:relative;background:var(--black-3);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+    .video-item video{width:100%;display:block;max-height:200px;object-fit:cover;}
+    .video-item .video-judul{font-size:0.78rem;font-weight:600;color:var(--white-dim);padding:0.5rem 0.7rem;}
+    .video-delete{position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.7);border:1px solid rgba(255,100,100,0.4);color:#ff6b6b;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.75rem;opacity:0;transition:opacity 0.2s;}
+    .video-item:hover .video-delete{opacity:1;}
+    .folder-card{position:relative;}
+    .folder-delete{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,100,100,0.4);color:#ff6b6b;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.75rem;opacity:0;transition:opacity 0.2s;z-index:2;}
+    .folder-card:hover .folder-delete{opacity:1;}
+    .action-btns{display:flex;gap:0.5rem;flex-wrap:wrap;}
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a class="brand" href="index.html">BD <span class="year-badge">2025</span></a>
+    <span class="navbar-subtitle">Bisnis Digital &middot; Jurusan Bisnis<br>Politeknik Negeri Jember</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.5rem;" id="navRight">
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <nav id="navMenu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="pengurus.html">Pengurus</a>
+    <a href="anggota.html">Anggota</a>
+    <a href="foto.html">Foto</a>
+    <a href="projek.html" class="active">Projek</a>
+  </nav>
+</nav>
+
+<div class="page-wrapper">
+  <div class="section">
+    <div id="pageContent"><div style="text-align:center;padding:4rem;color:var(--gray-mid);">⏳ Memuat data projek...</div></div>
+  </div>
+</div>
+
+<!-- MODAL: Tambah Folder -->
+<div class="modal-overlay" id="modalTambahFolder">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalTambahFolder')">&times;</div>
+    <h2 class="modal-title">📁 Tambah Folder Baru</h2>
+    <form id="formTambahFolder">
+      <div class="form-group"><label class="form-label">Nama Folder</label><input type="text" id="folderNama" class="form-control" placeholder="Contoh: Magang 2025, Tugas Akhir..." required></div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalTambahFolder')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnBuatFolder">Buat Folder</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Tambah Foto -->
+<div class="modal-overlay" id="modalTambahFoto">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalTambahFoto')">&times;</div>
+    <h2 class="modal-title">📷 Tambah Foto</h2>
+    <form id="formTambahFoto">
+      <div class="form-group"><label class="form-label">Judul Foto <span style="color:var(--gray-mid);font-weight:400;">(opsional)</span></label><input type="text" id="fotoJudul" class="form-control" placeholder="Tulis keterangan foto..."></div>
+      <div class="form-group">
+        <label class="form-label">Pilih Foto (bisa banyak)</label>
+        <div class="file-input-wrapper"><input type="file" id="fotoFiles" accept="image/jpeg,image/png,image/gif,image/webp" multiple required></div>
+        <p style="font-size:0.72rem;color:var(--gray-mid);margin-top:0.4rem;">Format: JPG, PNG, GIF, WebP · Disarankan maks ~500KB/foto.</p>
+      </div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalTambahFoto')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnUploadFoto">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Tambah File -->
+<div class="modal-overlay" id="modalTambahFile">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalTambahFile')">&times;</div>
+    <h2 class="modal-title">📎 Tambah File Dokumen</h2>
+    <form id="formTambahFile">
+      <div class="form-group"><label class="form-label">Judul File</label><input type="text" id="fileJudul" class="form-control" placeholder="Judul file..." required></div>
+      <div class="form-group">
+        <label class="form-label">Pilih File</label>
+        <div class="file-input-wrapper"><input type="file" id="fileInput" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar" required></div>
+        <p style="font-size:0.72rem;color:var(--gray-mid);margin-top:0.4rem;">Format: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, CSV, ZIP, RAR · Maks ~5MB</p>
+      </div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalTambahFile')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnUploadFile">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Tambah Video -->
+<div class="modal-overlay" id="modalTambahVideo">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalTambahVideo')">&times;</div>
+    <h2 class="modal-title">🎬 Tambah Video</h2>
+    <form id="formTambahVideo">
+      <div class="form-group"><label class="form-label">Judul Video</label><input type="text" id="videoJudul" class="form-control" placeholder="Judul video..." required></div>
+      <div class="form-group">
+        <label class="form-label">Pilih Video</label>
+        <div class="file-input-wrapper"><input type="file" id="videoInput" accept="video/mp4,video/webm,.mp4,.webm,.mov,.avi,.mkv" required></div>
+        <p style="font-size:0.72rem;color:var(--gray-mid);margin-top:0.4rem;">Format: MP4, WebM, MOV · Catatan: video disimpan di browser (maks ~50MB)</p>
+      </div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalTambahVideo')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnUploadVideo">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+const PAGE_TYPE = 'projek';
+const PAGE_TITLE = 'Projek Angkatan';
+
+function fileIcon(ext){const m={pdf:'📄',doc:'📝',docx:'📝',xls:'📊',xlsx:'📊',csv:'📊',ppt:'📋',pptx:'📋',txt:'🗒️',zip:'📦',rar:'📦'};return m[(ext||'').toLowerCase()]||'📁';}
+
+let _folders=[], _folderId=0, _isAdmin=false, _activeFolder=null;
+
+async function loadPage(){
+  _isAdmin = await wha_initPage(PAGE_TYPE);
+  _folderId = parseInt(new URLSearchParams(window.location.search).get('folder')||'0');
+  _folders = await WHAStorage.getProjekFolders();
+
+  if(!_folderId){ renderFolderList(); }
+  else {
+    _activeFolder = _folders.find(f=>f.id==_folderId);
+    if(!_activeFolder){ window.location.href='projek.html'; return; }
+    renderFolderContent();
+  }
+}
+
+function renderFolderList(){
+  const cards = _folders.map(f=>{
+    const fc=(f.foto||[]).length, fc2=(f.files||[]).length, fc3=(f.videos||[]).length;
+    const cnt=[fc+' foto', fc2?fc2+' file':'', fc3?fc3+' video':''].filter(Boolean).join(' · ')||'Kosong';
+    return `<div class="folder-card" style="position:relative;">
+      <a href="projek.html?folder=${f.id}" class="folder-card" style="text-decoration:none;">
+        <div class="folder-icon">📁</div>
+        <div class="folder-name">${escHtml(f.nama)}</div>
+        <div class="folder-count">${cnt}</div>
+      </a>
+      ${_isAdmin?`<button class="folder-delete" onclick="event.preventDefault();hapusFolder(${f.id},'${escHtml(f.nama)}')" title="Hapus folder">✕</button>`:''}
+    </div>`;
+  }).join('');
+
+  document.getElementById('pageContent').innerHTML = `
+    <div class="flex-between mb-3">
+      <div><p class="section-label">Karya</p><h1 class="page-title">${PAGE_TITLE}</h1>
+      <p class="page-subtitle">${_folders.length} folder tersedia</p></div>
+      ${_isAdmin?`<button class="btn btn-white" onclick="openModal('modalTambahFolder')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tambah Folder</button>`:''}
+    </div>
+    <div class="folder-grid">
+      ${cards||'<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--gray-mid);"><div style="font-size:3rem;margin-bottom:1rem;">📂</div><p>Belum ada folder projek.</p></div>'}
+    </div>`;
+}
+
+function renderFolderContent(){
+  const f = _activeFolder;
+  const fotos = (f.foto||[]).map(i=>WHAStorage.normFoto(i));
+  const files = f.files||[];
+  const videos = f.videos||[];
+
+  let fotoHtml='';
+  if(fotos.length){
+    const items=fotos.map((foto,i)=>{
+      const src=WHAStorage.resolveGalleryImg(foto.nama, 'projek', _folderId);
+      if(!src) return '';
+      return `<div class="photo-item fade-in">
+        <img src="${src}" alt="${escHtml(foto.judul)}" loading="lazy" onclick="openLightbox('${src}')" onerror="this.parentElement.style.display='none'">
+        ${foto.judul?`<div class="photo-judul">${escHtml(foto.judul)}</div>`:''}
+        ${_isAdmin?`<button class="photo-delete" onclick="hapusFoto(${i})" title="Hapus">✕</button>`:''}
+      </div>`;
+    }).join('');
+    fotoHtml=`<p class="file-list-title">📷 Foto</p><div class="photo-grid" id="photoGrid">${items}</div>`;
+  }
+
+  let filesHtml='';
+  if(files.length){
+    const items=files.map((fi,i)=>{
+      const src=WHAStorage.resolveGalleryImg(fi.nama,'projek',_folderId);
+      const dlSrc = src||'';
+      return `<div class="file-item">
+        <div class="file-icon">${fileIcon(fi.ext)}</div>
+        <div class="file-info"><div class="file-judul">${escHtml(fi.judul||fi.nama)}</div>
+        <div class="file-meta">${(fi.ext||'').toUpperCase()} · ${escHtml(fi.asli||fi.nama)}</div></div>
+        <div class="file-actions">
+          ${dlSrc?`<a href="${dlSrc}" download="${escHtml(fi.asli||fi.nama)}" class="btn btn-outline" style="font-size:0.72rem;padding:4px 10px;">⬇️ Unduh</a>`:''}
+          ${_isAdmin?`<button class="btn btn-outline" onclick="hapusFile(${i})" style="color:#ff6b6b;border-color:rgba(255,107,107,0.3);font-size:0.72rem;padding:4px 10px;">🗑</button>`:''}
+        </div>
+      </div>`;
+    }).join('');
+    filesHtml=`<div class="file-list" style="margin-top:2rem;"><p class="file-list-title">📎 File Dokumen</p>${items}</div>`;
+  }
+
+  let videosHtml='';
+  if(videos.length){
+    const items=videos.map((vi,i)=>{
+      const src=WHAStorage.resolveGalleryImg(vi.nama,'projek',_folderId);
+      if(!src) return '';
+      return `<div class="video-item">
+        <video controls preload="metadata"><source src="${src}"></video>
+        <div class="video-judul">${escHtml(vi.judul||vi.nama)}</div>
+        ${_isAdmin?`<button class="video-delete" onclick="hapusVideo(${i})" title="Hapus Video">✕</button>`:''}
+      </div>`;
+    }).join('');
+    videosHtml=`<div><p class="file-list-title" style="margin-top:2rem;">🎬 Video</p><div class="video-grid">${items}</div></div>`;
+  }
+
+  const total=fotos.length+files.length+videos.length;
+  const empty=total===0?`<div style="text-align:center;padding:4rem;color:var(--gray-mid);"><div style="font-size:3rem;margin-bottom:1rem;">📂</div><p>Folder ini masih kosong.</p></div>`:'';
+
+  document.getElementById('pageContent').innerHTML = `
+    <div style="margin-bottom:1.5rem;font-size:0.82rem;color:var(--gray-mid);">
+      <a href="projek.html" style="color:var(--gray-mid);text-decoration:none;">${PAGE_TITLE}</a>
+      <span style="margin:0 0.5rem;">›</span><span style="color:var(--white);">${escHtml(f.nama)}</span>
+    </div>
+    <div class="flex-between mb-3" style="flex-wrap:wrap;gap:0.8rem;">
+      <div><h1 class="page-title">${escHtml(f.nama)}</h1>
+      <p class="page-subtitle">${[fotos.length+' foto',files.length?files.length+' file':'',videos.length?videos.length+' video':''].filter(Boolean).join(' · ')||'Kosong'}</p></div>
+      ${_isAdmin?`<div class="action-btns">
+        <button class="btn btn-white" onclick="openModal('modalTambahFoto')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Tambah Foto</button>
+        <button class="btn btn-white" onclick="openModal('modalTambahFile')" style="background:var(--gray-dark);color:var(--white-dim);">Tambah File</button>
+        <button class="btn btn-white" onclick="openModal('modalTambahVideo')" style="background:var(--gray-dark);color:var(--white-dim);">Tambah Video</button>
+      </div>`:''} 
+    </div>
+    ${fotoHtml}${filesHtml}${videosHtml}${empty}`;
+}
+
+// ---- ADMIN ACTIONS ----
+async function hapusFolder(id, nama){
+  confirmDelete(`Hapus folder "${nama}" beserta semua isinya?`, async()=>{
+    _folders=_folders.filter(f=>f.id!=id);
+    await WHAStorage.saveProjekFolders(_folders);
+    showToast('Folder dihapus!');
+    renderFolderList();
+  });
+}
+
+document.getElementById('formTambahFolder').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('btnBuatFolder');
+  btn.disabled=true; btn.textContent='Membuat...';
+  const newId=await WHAStorage.nextProjekFolderId();
+  _folders.push({id:newId,nama:document.getElementById('folderNama').value.trim(),foto:[],files:[],videos:[]});
+  await WHAStorage.saveProjekFolders(_folders);
+  showToast('Folder dibuat!');
+  closeModal('modalTambahFolder');
+  this.reset(); btn.disabled=false; btn.textContent='Buat Folder';
+  renderFolderList();
+});
+
+document.getElementById('formTambahFoto').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('btnUploadFoto');
+  btn.disabled=true; btn.textContent='Mengupload...';
+  const files=document.getElementById('fotoFiles').files;
+  const judul=document.getElementById('fotoJudul').value.trim();
+  let success=0, fail=0;
+  for(const file of files){
+    try{
+      const b64=await WHAStorage.fileToB64(file);
+      const key=`projek_f${_folderId}_${Date.now()}_${Math.random().toString(36).slice(2,5)}`;
+      if(!WHAStorage.setImg(key,b64)){fail++;continue;}
+      const f=_folders.find(x=>x.id==_folderId);
+      if(!f.foto)f.foto=[];
+      f.foto.push({nama:'ls:'+key,judul:judul});
+      success++;
+    }catch{fail++;}
+  }
+  await WHAStorage.saveProjekFolders(_folders);
+  _activeFolder=_folders.find(f=>f.id==_folderId);
+  btn.disabled=false; btn.textContent='Upload';
+  closeModal('modalTambahFoto');
+  this.reset();
+  if(success) showToast(`${success} foto berhasil diupload!`);
+  if(fail) showToast(`${fail} foto gagal (mungkin terlalu besar).`,'error');
+  renderFolderContent();
+});
+
+document.getElementById('formTambahFile').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('btnUploadFile');
+  btn.disabled=true; btn.textContent='Mengupload...';
+  const file=document.getElementById('fileInput').files[0];
+  const judul=document.getElementById('fileJudul').value.trim();
+  if(!file){showToast('Pilih file.','error');btn.disabled=false;btn.textContent='Upload';return;}
+  try{
+    const b64=await WHAStorage.fileToB64(file);
+    const ext=file.name.split('.').pop().toLowerCase();
+    const key=`projekfile_f${_folderId}_${Date.now()}`;
+    if(!WHAStorage.setImg(key,b64)){showToast('Gagal: storage penuh.','error');btn.disabled=false;btn.textContent='Upload';return;}
+    const f=_folders.find(x=>x.id==_folderId);
+    if(!f.files)f.files=[];
+    f.files.push({nama:'ls:'+key,judul,ext,asli:file.name});
+    await WHAStorage.saveProjekFolders(_folders);
+    _activeFolder=f;
+    showToast('File diupload!');
+    closeModal('modalTambahFile');
+    this.reset();
+    renderFolderContent();
+  }catch{showToast('Gagal upload file.','error');}
+  btn.disabled=false; btn.textContent='Upload';
+});
+
+document.getElementById('formTambahVideo').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('btnUploadVideo');
+  btn.disabled=true; btn.textContent='Mengupload...';
+  const file=document.getElementById('videoInput').files[0];
+  const judul=document.getElementById('videoJudul').value.trim();
+  if(!file){showToast('Pilih video.','error');btn.disabled=false;btn.textContent='Upload';return;}
+  try{
+    const b64=await WHAStorage.fileToB64(file);
+    const key=`projekvid_f${_folderId}_${Date.now()}`;
+    if(!WHAStorage.setImg(key,b64)){showToast('Gagal: storage penuh. Video terlalu besar.','error');btn.disabled=false;btn.textContent='Upload';return;}
+    const f=_folders.find(x=>x.id==_folderId);
+    if(!f.videos)f.videos=[];
+    f.videos.push({nama:'ls:'+key,judul,asli:file.name});
+    await WHAStorage.saveProjekFolders(_folders);
+    _activeFolder=f;
+    showToast('Video diupload!');
+    closeModal('modalTambahVideo');
+    this.reset();
+    renderFolderContent();
+  }catch{showToast('Gagal upload video.','error');}
+  btn.disabled=false; btn.textContent='Upload';
+});
+
+async function hapusFoto(idx){
+  confirmDelete('Hapus foto ini?', async()=>{
+    const f=_folders.find(x=>x.id==_folderId);
+    const item=f.foto[idx];
+    if(item&&item.nama&&item.nama.startsWith('ls:'))WHAStorage.delImg(item.nama.slice(3));
+    f.foto.splice(idx,1);
+    await WHAStorage.saveProjekFolders(_folders);
+    _activeFolder=f;
+    showToast('Foto dihapus!');
+    renderFolderContent();
+  });
+}
+
+async function hapusFile(idx){
+  confirmDelete('Hapus file ini?', async()=>{
+    const f=_folders.find(x=>x.id==_folderId);
+    const item=f.files[idx];
+    if(item&&item.nama&&item.nama.startsWith('ls:'))WHAStorage.delImg(item.nama.slice(3));
+    f.files.splice(idx,1);
+    await WHAStorage.saveProjekFolders(_folders);
+    _activeFolder=f;
+    showToast('File dihapus!');
+    renderFolderContent();
+  });
+}
+
+async function hapusVideo(idx){
+  confirmDelete('Hapus video ini?', async()=>{
+    const f=_folders.find(x=>x.id==_folderId);
+    const item=f.videos[idx];
+    if(item&&item.nama&&item.nama.startsWith('ls:'))WHAStorage.delImg(item.nama.slice(3));
+    f.videos.splice(idx,1);
+    await WHAStorage.saveProjekFolders(_folders);
+    _activeFolder=f;
+    showToast('Video dihapus!');
+    renderFolderContent();
+  });
+}
+
+loadPage();
+</script>
+</body>
+</html>
