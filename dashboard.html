@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Bisnis Digital 2025</title>
+  <meta name="description" content="Dashboard Website Angkatan Bisnis Digital 2025">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .dashboard-hero{padding:5rem 2rem 3rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:center;}
+    @media(max-width:900px){.dashboard-hero{grid-template-columns:1fr;padding:3rem 1rem 2rem;}.hero-logo-area{display:flex;justify-content:center;flex-direction:column;align-items:center;}}
+    .hero-logo-box{width:200px;height:200px;border-radius:24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;flex-shrink:0;transition:all 0.3s ease;}
+    .hero-logo-box:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);}
+    .hero-logo-box img{width:100%;height:100%;object-fit:contain;padding:1rem;}
+    .logo-placeholder{font-size:4.5rem;font-weight:900;color:rgba(255,255,255,0.15);}
+    .upload-overlay{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.7);padding:8px;text-align:center;font-size:0.72rem;color:rgba(255,255,255,0.7);opacity:0;transition:opacity 0.3s ease;}
+    .hero-logo-box:hover .upload-overlay{opacity:1;}
+    .motto-block{margin-top:1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.8rem 1.2rem;max-width:200px;position:relative;text-align:center;}
+    .motto-block .motto-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--gray-mid);font-weight:700;margin-bottom:0.3rem;}
+    .motto-block .motto-text{font-size:0.78rem;font-style:italic;color:var(--white-dim);line-height:1.4;}
+    .motto-edit-btn{position:absolute;top:5px;right:5px;background:var(--gray-dark);border:1px solid var(--border);color:var(--gray-light);width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.6rem;transition:all 0.2s;}
+    .motto-edit-btn:hover{color:var(--white);background:var(--gray);}
+    .hero-text h1{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:0.3rem;}
+    .hero-text .subtitle-top{font-size:0.72rem;color:rgba(255,255,255,0.35);font-weight:700;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.3rem;}
+    .hero-text .subtitle-institution{font-size:0.82rem;color:rgba(255,255,255,0.45);font-weight:400;line-height:1.5;margin-bottom:1.5rem;}
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;}
+    .info-block{background:var(--black-3);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;position:relative;}
+    .info-block h3{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.8rem;padding-right:2rem;}
+    .info-block p{font-size:0.9rem;color:var(--white-dim);line-height:1.7;}
+    .info-edit-btn{position:absolute;top:1rem;right:1rem;background:var(--gray-dark);border:1px solid var(--border);color:var(--gray-light);padding:3px 10px;border-radius:6px;font-size:0.7rem;cursor:pointer;transition:all 0.2s;}
+    .info-edit-btn:hover{color:var(--white);background:var(--gray);}
+    .medsos-title{font-size:0.7rem;letter-spacing:0.2em;font-weight:700;text-transform:uppercase;color:var(--gray-mid);margin-bottom:1rem;}
+    .edit-medsos-btn{background:var(--gray-dark);border:1px solid var(--border);color:var(--gray-light);padding:4px 12px;border-radius:6px;font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .edit-medsos-btn:hover{color:var(--white);background:var(--gray);}
+    @media(max-width:768px){#infoGrid{grid-template-columns:1fr !important;}}
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a class="brand" href="index.html">BD <span class="year-badge">2025</span></a>
+    <span class="navbar-subtitle">Bisnis Digital &middot; Jurusan Bisnis<br>Politeknik Negeri Jember</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.5rem;" id="navRight">
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <nav id="navMenu">
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="pengurus.html">Pengurus</a>
+    <a href="anggota.html">Anggota</a>
+    <a href="foto.html">Foto</a>
+    <a href="projek.html">Projek</a>
+  </nav>
+</nav>
+
+<div class="page-wrapper">
+  <div class="dashboard-hero">
+    <div class="hero-logo-area">
+      <div class="hero-logo-box" id="logoBox">
+        <div class="logo-placeholder" id="logoPlaceholder">BD</div>
+        <img id="logoImg" src="" alt="Logo" style="display:none;">
+        <div class="upload-overlay" id="logoOverlay" style="display:none;">📷 Ganti Logo</div>
+      </div>
+      <div class="motto-block">
+        <div class="motto-label">Motto Angkatan</div>
+        <div class="motto-text" id="mottoText">Memuat...</div>
+        <button class="motto-edit-btn" id="mottoEditBtn" style="display:none;" onclick="openModal('modalMotto')" title="Edit Motto">✏️</button>
+      </div>
+    </div>
+    <div class="hero-text">
+      <p class="subtitle-top">Welcome to</p>
+      <h1>Digital Business</h1>
+      <p class="subtitle-institution">Bisnis Digital &nbsp;·&nbsp; Jurusan Bisnis<br>Politeknik Negeri Jember &nbsp;·&nbsp; Angkatan 2025</p>
+      <div class="stats-grid">
+        <a href="pengurus.html" class="stat-card"><div class="stat-num" id="countPengurus">—</div><div class="stat-label">Pengurus</div></a>
+        <a href="anggota.html" class="stat-card"><div class="stat-num" id="countAnggota">—</div><div class="stat-label">Anggota</div></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="flex-between mb-2" style="flex-wrap:wrap;gap:0.8rem;">
+      <div>
+        <p class="section-label">Informasi</p>
+        <h2 style="font-size:1.1rem;font-weight:700;color:var(--white-dim);">Deskripsi Angkatan</h2>
+      </div>
+      <button class="btn btn-white" id="btnTambahDesc" style="font-size:0.78rem;padding:7px 16px;display:none;" onclick="openModal('modalTambahDesc')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tambah Deskripsi
+      </button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;" id="infoGrid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-mid);"><p>Memuat...</p></div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="flex-between mb-2">
+      <p class="section-label">📸 Foto Angkatan</p>
+      <button class="edit-medsos-btn" id="btnFotoAngkatan" style="display:none;" onclick="openModal('modalFotoAngkatan')">📷 Upload Foto</button>
+    </div>
+    <div id="fotoAngkatanArea" style="margin-bottom:2rem;"></div>
+
+    <hr class="divider">
+
+    <div class="flex-between mb-2">
+      <p class="medsos-title">Media Sosial Angkatan</p>
+      <button class="edit-medsos-btn" id="btnEditMedsos" style="display:none;" onclick="openModal('modalMedsos')">✏️ Edit Link</button>
+    </div>
+    <div class="social-links">
+      <a href="#" class="social-link" id="link-ig">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+      <a href="#" class="social-link" id="link-yt">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58a2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+        YouTube
+      </a>
+      <a href="#" class="social-link" id="link-tt">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.69a8.2 8.2 0 0 0 4.78 1.52V7.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        TikTok
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Upload Logo -->
+<div class="modal-overlay" id="modalLogo">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalLogo')">&times;</div>
+    <h2 class="modal-title">Upload Logo Angkatan</h2>
+    <form id="formLogo">
+      <div class="form-group">
+        <label class="form-label">Pilih File Logo (JPG/PNG/SVG, maks 2MB)</label>
+        <div class="file-input-wrapper"><input type="file" name="logo" accept="image/*" onchange="previewImage(this,'prevLogo')" required></div>
+      </div>
+      <div style="margin-bottom:1rem;"><img id="prevLogo" style="display:none;max-width:100%;max-height:200px;border-radius:8px;border:1px solid var(--border);object-fit:contain;" alt="preview"></div>
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalLogo')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnUploadLogo">Upload Logo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Edit Motto -->
+<div class="modal-overlay" id="modalMotto">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalMotto')">&times;</div>
+    <h2 class="modal-title">Edit Motto Angkatan</h2>
+    <form id="formMotto">
+      <div class="form-group">
+        <label class="form-label">Motto Angkatan</label>
+        <input type="text" id="mottoInput" class="form-control" placeholder="Tulis motto angkatan..." required>
+      </div>
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalMotto')">Batal</button>
+        <button type="submit" class="btn btn-white">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Edit Media Sosial -->
+<div class="modal-overlay" id="modalMedsos">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalMedsos')">&times;</div>
+    <h2 class="modal-title">Edit Link Media Sosial</h2>
+    <form id="formMedsos">
+      <div class="form-group"><label class="form-label">Instagram URL</label><input type="url" id="inputIg" class="form-control" placeholder="https://instagram.com/..."></div>
+      <div class="form-group"><label class="form-label">YouTube URL</label><input type="url" id="inputYt" class="form-control" placeholder="https://youtube.com/..."></div>
+      <div class="form-group"><label class="form-label">TikTok URL</label><input type="url" id="inputTt" class="form-control" placeholder="https://tiktok.com/..."></div>
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalMedsos')">Batal</button>
+        <button type="submit" class="btn btn-white">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Tambah Deskripsi -->
+<div class="modal-overlay" id="modalTambahDesc">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalTambahDesc')">&times;</div>
+    <h2 class="modal-title">➕ Tambah Deskripsi Baru</h2>
+    <form id="formTambahDesc">
+      <div class="form-group"><label class="form-label">Judul Deskripsi</label><input type="text" id="newDescTitle" class="form-control" placeholder="Contoh: Visi dan Misi Angkatan..." required></div>
+      <div class="form-group"><label class="form-label">Isi Deskripsi</label><textarea id="newDescContent" class="form-control" rows="6" style="resize:vertical;" placeholder="Tulis deskripsi..." required></textarea></div>
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalTambahDesc')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnSaveTambahDesc">Tambahkan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Edit Deskripsi -->
+<div class="modal-overlay" id="modalEditDesc">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalEditDesc')">&times;</div>
+    <h2 class="modal-title">✏️ Edit Deskripsi</h2>
+    <form id="formEditDesc">
+      <input type="hidden" id="editDescId">
+      <div class="form-group"><label class="form-label">Judul Deskripsi</label><input type="text" id="editDescTitle" class="form-control" placeholder="Judul..." required></div>
+      <div class="form-group"><label class="form-label">Isi Deskripsi</label><textarea id="editDescContent" class="form-control" rows="6" style="resize:vertical;" required></textarea></div>
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalEditDesc')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnSaveEditDesc">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Upload Foto Angkatan -->
+<div class="modal-overlay" id="modalFotoAngkatan">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalFotoAngkatan')">&times;</div>
+    <h2 class="modal-title">📸 Upload Foto Angkatan</h2>
+    <form id="formFotoAngkatan">
+      <div class="form-group">
+        <label class="form-label">Pilih Foto Angkatan (JPG/PNG, maks 2MB)</label>
+        <div class="file-input-wrapper"><input type="file" accept="image/jpeg,image/png,image/webp" onchange="previewImage(this,'prevFotoAngkatan')" required></div>
+      </div>
+      <div style="margin-bottom:1rem;"><img id="prevFotoAngkatan" style="display:none;max-width:100%;max-height:220px;border-radius:8px;border:1px solid var(--border);object-fit:cover;" alt="preview"></div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalFotoAngkatan')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnUploadFotoAngkatan">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+let _site = {}, _isAdmin = false;
+
+async function loadAll() {
+  _isAdmin = await wha_initPage('dashboard');
+
+  const [site, pengurus, angA, angB, angC, angD] = await Promise.all([
+    WHAStorage.getSiteData(),
+    WHAStorage.getPengurus(),
+    WHAStorage.getAnggota('A'), WHAStorage.getAnggota('B'),
+    WHAStorage.getAnggota('C'), WHAStorage.getAnggota('D'),
+  ]);
+  _site = site;
+
+  // Logo
+  if (site.logo) {
+    const src = WHAStorage.resolveImg(site.logo, 'logo');
+    if (src) {
+      const li = document.getElementById('logoImg');
+      li.src = src; li.style.display = '';
+      document.getElementById('logoPlaceholder').style.display = 'none';
+      li.onerror = () => { li.style.display='none'; document.getElementById('logoPlaceholder').style.display=''; };
+    }
+  }
+
+  // Motto
+  document.getElementById('mottoText').textContent = site.motto || 'We Are The Leader, Success Together';
+
+  // Stats
+  document.getElementById('countPengurus').textContent = pengurus.length;
+  document.getElementById('countAnggota').textContent = angA.length + angB.length + angC.length + angD.length;
+
+  // Descriptions
+  renderDescs(site.descriptions || []);
+
+  // Foto Angkatan
+  renderFotoAngkatan(site.foto_angkatan);
+
+  // Social
+  if (site.instagram) document.getElementById('link-ig').href = site.instagram;
+  if (site.youtube)   document.getElementById('link-yt').href = site.youtube;
+  if (site.tiktok)    document.getElementById('link-tt').href = site.tiktok;
+
+  if (_isAdmin) {
+    // Show admin controls
+    document.getElementById('logoBox').style.cursor = 'pointer';
+    document.getElementById('logoBox').onclick = () => openModal('modalLogo');
+    document.getElementById('logoOverlay').style.display = '';
+    document.getElementById('mottoEditBtn').style.display = '';
+    document.getElementById('btnTambahDesc').style.display = '';
+    document.getElementById('btnEditMedsos').style.display = '';
+    document.getElementById('btnFotoAngkatan').style.display = '';
+    document.getElementById('mottoInput').value = site.motto || '';
+    document.getElementById('inputIg').value = site.instagram || '';
+    document.getElementById('inputYt').value = site.youtube || '';
+    document.getElementById('inputTt').value = site.tiktok || '';
+    // Update btn foto angkatan label
+    document.getElementById('btnFotoAngkatan').textContent = site.foto_angkatan ? '📷 Ganti Foto' : '📷 Upload Foto';
+  }
+}
+
+function renderDescs(descs) {
+  const grid = document.getElementById('infoGrid');
+  if (!descs.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-mid);border:2px dashed var(--border);border-radius:var(--radius-lg);">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">📄</div>
+      <p>Belum ada deskripsi.${_isAdmin?' Klik <strong>Tambah Deskripsi</strong> untuk mulai.':''}</p></div>`;
+    return;
+  }
+  grid.innerHTML = descs.map(d => `
+    <div class="info-block fade-in" id="desc-block-${d.id}">
+      ${_isAdmin ? `<div style="position:absolute;top:0.8rem;right:0.8rem;display:flex;gap:0.3rem;">
+        <button class="info-edit-btn" onclick="openEditDesc(${d.id})" title="Edit">✏️ Edit</button>
+        <button class="info-edit-btn" onclick="deleteDesc(${d.id})" style="color:#ff6b6b;border-color:rgba(255,107,107,0.3);" title="Hapus">🗑</button>
+      </div>` : ''}
+      <h3>${escHtml(d.title)}</h3>
+      <p>${escHtml(d.content)}</p>
+    </div>`).join('');
+}
+
+function renderFotoAngkatan(fotoVal) {
+  const area = document.getElementById('fotoAngkatanArea');
+  if (!fotoVal) {
+    area.innerHTML = _isAdmin
+      ? `<div style="width:100%;border:2px dashed var(--border);border-radius:16px;padding:3rem;text-align:center;color:var(--gray-mid);cursor:pointer;" onclick="openModal('modalFotoAngkatan')">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;">📸</div>
+          <p>Belum ada foto angkatan — <strong>klik untuk upload</strong></p></div>`
+      : '<div style="text-align:center;padding:2rem;color:var(--gray-mid);">Foto angkatan belum tersedia.</div>';
+    return;
+  }
+  const src = WHAStorage.resolveImg(fotoVal, 'foto_angkatan');
+  area.innerHTML = `<div style="width:100%;border-radius:16px;overflow:hidden;border:1px solid var(--border);cursor:pointer;" onclick="openLightbox('${src}')">
+    <img src="${src}" alt="Foto Angkatan" style="width:100%;display:block;max-height:480px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\'padding:2rem;text-align:center;color:var(--gray-mid);\'>Foto tidak ditemukan</div>'">
+  </div>`;
+}
+
+// ---- ADMIN ACTIONS ----
+
+// Upload Logo
+document.getElementById('formLogo').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const file = this.querySelector('input[type=file]').files[0];
+  if (!file) return;
+  const btn = document.getElementById('btnUploadLogo');
+  btn.disabled = true; btn.textContent = 'Mengupload...';
+  const b64 = await WHAStorage.fileToB64(file);
+  const key = 'logo_main';
+  if (!WHAStorage.setImg(key, b64)) { showToast('Gagal: storage penuh.','error'); btn.disabled=false; btn.textContent='Upload Logo'; return; }
+  await WHAStorage.patchSiteField('logo', 'ls:' + key);
+  showToast('Logo berhasil diupload!');
+  closeModal('modalLogo');
+  setTimeout(() => location.reload(), 900);
+});
+
+// Edit Motto
+document.getElementById('formMotto').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const val = document.getElementById('mottoInput').value.trim();
+  await WHAStorage.patchSiteField('motto', val);
+  document.getElementById('mottoText').textContent = val;
+  showToast('Motto disimpan!');
+  closeModal('modalMotto');
+});
+
+// Edit Medsos
+document.getElementById('formMedsos').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const ig = document.getElementById('inputIg').value;
+  const yt = document.getElementById('inputYt').value;
+  const tt = document.getElementById('inputTt').value;
+  await WHAStorage.patchSiteData({ instagram: ig, youtube: yt, tiktok: tt });
+  if (ig) document.getElementById('link-ig').href = ig;
+  if (yt) document.getElementById('link-yt').href = yt;
+  if (tt) document.getElementById('link-tt').href = tt;
+  showToast('Link media sosial disimpan!');
+  closeModal('modalMedsos');
+});
+
+// Tambah Deskripsi
+document.getElementById('formTambahDesc').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveTambahDesc');
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+  await WHAStorage.addSiteDescription(
+    document.getElementById('newDescTitle').value.trim(),
+    document.getElementById('newDescContent').value.trim()
+  );
+  showToast('Deskripsi ditambahkan!');
+  closeModal('modalTambahDesc');
+  this.reset();
+  btn.disabled = false; btn.textContent = 'Tambahkan';
+  const site = await WHAStorage.getSiteData();
+  renderDescs(site.descriptions || []);
+});
+
+// Open Edit Desc
+function openEditDesc(id) {
+  const d = (_site.descriptions || []).find(x => x.id == id);
+  if (!d) return;
+  document.getElementById('editDescId').value = d.id;
+  document.getElementById('editDescTitle').value = d.title;
+  document.getElementById('editDescContent').value = d.content;
+  openModal('modalEditDesc');
+}
+
+// Save Edit Desc
+document.getElementById('formEditDesc').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveEditDesc');
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+  const id = parseInt(document.getElementById('editDescId').value);
+  await WHAStorage.editSiteDescription(id,
+    document.getElementById('editDescTitle').value.trim(),
+    document.getElementById('editDescContent').value.trim()
+  );
+  showToast('Deskripsi diperbarui!');
+  closeModal('modalEditDesc');
+  btn.disabled = false; btn.textContent = 'Simpan Perubahan';
+  const site = await WHAStorage.getSiteData();
+  _site = site;
+  renderDescs(site.descriptions || []);
+});
+
+// Delete Desc
+function deleteDesc(id) {
+  const d = (_site.descriptions || []).find(x => x.id == id);
+  confirmDelete(`Hapus "${d ? d.title : 'deskripsi ini'}"?`, async () => {
+    await WHAStorage.deleteSiteDescription(id);
+    const site = await WHAStorage.getSiteData();
+    _site = site;
+    renderDescs(site.descriptions || []);
+    showToast('Deskripsi dihapus!');
+  });
+}
+
+// Upload Foto Angkatan
+document.getElementById('formFotoAngkatan').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const file = this.querySelector('input[type=file]').files[0];
+  if (!file) return;
+  const btn = document.getElementById('btnUploadFotoAngkatan');
+  btn.disabled = true; btn.textContent = 'Mengupload...';
+  const b64 = await WHAStorage.fileToB64(file);
+  const key = 'foto_angkatan_main';
+  if (!WHAStorage.setImg(key, b64)) { showToast('Gagal: storage penuh.','error'); btn.disabled=false; btn.textContent='Upload'; return; }
+  await WHAStorage.patchSiteField('foto_angkatan', 'ls:' + key);
+  showToast('Foto angkatan berhasil diupload!');
+  closeModal('modalFotoAngkatan');
+  setTimeout(() => location.reload(), 900);
+});
+
+loadAll();
+</script>
+</body>
+</html>

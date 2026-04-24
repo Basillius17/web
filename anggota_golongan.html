@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golongan — | Anggota BD 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .ketua-section{display:flex;align-items:center;gap:1.5rem;background:var(--black-3);border:1px solid var(--border-hover);border-radius:var(--radius-lg);padding:1.5rem 2rem;margin-bottom:2rem;position:relative;}
+    .ketua-info p.role{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--gray-mid);font-weight:700;}
+    .ketua-info h2{font-size:1.3rem;font-weight:700;margin:0.2rem 0 0.4rem;}
+    .member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;}
+    .member-avatar{width:52px;height:52px;border-radius:10px;background:var(--gray-dark);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
+    .member-avatar img{width:100%;height:100%;object-fit:cover;}
+    .search-bar{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:center;}
+    .search-bar input{flex:1;background:var(--black-3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;color:var(--white);font-family:'Inter',sans-serif;font-size:0.875rem;outline:none;}
+    .search-bar input:focus{border-color:var(--border-hover);}
+    .search-bar input::placeholder{color:var(--gray-mid);}
+    .golongan-banner{width:100%;aspect-ratio:16/6;background-size:cover;background-position:center;border-radius:16px;margin-bottom:2rem;position:relative;overflow:hidden;border:1px solid var(--border);}
+    .golongan-banner-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,0.5) 100%);}
+    .golongan-banner-label{position:absolute;bottom:1rem;left:1.2rem;font-size:1.3rem;font-weight:800;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.8);background:rgba(0,0,0,0.45);padding:4px 14px;border-radius:20px;backdrop-filter:blur(4px);}
+    .golongan-banner-empty{width:100%;aspect-ratio:16/6;background:var(--black-3);border:2px dashed var(--border);border-radius:16px;display:flex;align-items:center;justify-content:center;gap:0.6rem;color:var(--gray-mid);font-size:0.85rem;margin-bottom:2rem;cursor:pointer;}
+    @media(max-width:600px){.golongan-banner,.golongan-banner-empty{aspect-ratio:16/9;border-radius:12px;margin-bottom:1rem;}}
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a class="brand" href="index.html">BD <span class="year-badge">2025</span></a>
+    <span class="navbar-subtitle">Bisnis Digital &middot; Jurusan Bisnis<br>Politeknik Negeri Jember</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.5rem;" id="navRight">
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <nav id="navMenu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="pengurus.html">Pengurus</a>
+    <a href="anggota.html" class="active">Anggota</a>
+    <a href="foto.html">Foto</a>
+    <a href="projek.html">Projek</a>
+  </nav>
+</nav>
+
+<div class="page-wrapper">
+  <div class="section">
+    <div id="pageContent"><div style="text-align:center;padding:4rem;color:var(--gray-mid);">⏳ Memuat data...</div></div>
+  </div>
+</div>
+
+<!-- MODAL: Tambah Anggota -->
+<div class="modal-overlay" id="modalTambah">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalTambah')">&times;</div>
+    <h2 class="modal-title" id="modalTambahTitle">Tambah Anggota</h2>
+    <form id="formTambah">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <div class="form-group"><label class="form-label">No. Absen</label><input type="number" id="tAbsen" class="form-control" min="1" placeholder="1" required></div>
+        <div class="form-group"><label class="form-label">NIM</label><input type="text" id="tNim" class="form-control" placeholder="Nomor Induk" required></div>
+      </div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" id="tNama" class="form-control" placeholder="Nama anggota..." required></div>
+      <div class="form-group">
+        <label class="form-label">Termasuk Pengurus?</label>
+        <select id="tIsPengurus" class="form-control" onchange="document.getElementById('tJabField').style.display=this.value==='1'?'':'none'">
+          <option value="0">Tidak</option><option value="1">Ya</option>
+        </select>
+      </div>
+      <div class="form-group" id="tJabField" style="display:none;"><label class="form-label">Jabatan Pengurus</label><input type="text" id="tJabatan" class="form-control" placeholder="Contoh: Bendahara 1"></div>
+      <div class="form-group">
+        <label class="form-label">Foto (Opsional)</label>
+        <div class="file-input-wrapper"><input type="file" id="tFoto" accept="image/*" onchange="previewImage(this,'prevTambah')"></div>
+        <img id="prevTambah" style="display:none;margin-top:8px;max-height:100px;border-radius:8px;" alt="">
+      </div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalTambah')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnSaveTambah">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Edit Anggota -->
+<div class="modal-overlay" id="modalEdit">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalEdit')">&times;</div>
+    <h2 class="modal-title">Edit Anggota</h2>
+    <form id="formEdit">
+      <input type="hidden" id="eId">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <div class="form-group"><label class="form-label">No. Absen</label><input type="number" id="eAbsen" class="form-control" min="1" required></div>
+        <div class="form-group"><label class="form-label">NIM</label><input type="text" id="eNim" class="form-control" required></div>
+      </div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" id="eNama" class="form-control" required></div>
+      <div class="form-group">
+        <label class="form-label">Termasuk Pengurus?</label>
+        <select id="eIsPengurus" class="form-control" onchange="document.getElementById('eJabField').style.display=this.value==='1'?'':'none'">
+          <option value="0">Tidak</option><option value="1">Ya</option>
+        </select>
+      </div>
+      <div class="form-group" id="eJabField" style="display:none;"><label class="form-label">Jabatan Pengurus</label><input type="text" id="eJabatan" class="form-control"></div>
+      <div class="form-group">
+        <label class="form-label">Ganti Foto (Opsional)</label>
+        <div class="file-input-wrapper"><input type="file" id="eFoto" accept="image/*" onchange="previewImage(this,'prevEdit')"></div>
+        <img id="prevEdit" style="display:none;margin-top:8px;max-height:100px;border-radius:8px;" alt="">
+      </div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-danger" onclick="hapusAnggotaById()">Hapus</button>
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalEdit')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnSaveEdit">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Edit Ketua Golongan -->
+<div class="modal-overlay" id="modalEditKetua">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalEditKetua')">&times;</div>
+    <h2 class="modal-title" id="modalEditKetuaTitle">Edit Ketua Golongan</h2>
+    <form id="formEditKetua">
+      <input type="hidden" id="ekId">
+      <div class="form-group"><label class="form-label">Jabatan</label><input type="text" id="ekJabatan" class="form-control" readonly style="color:var(--gray-mid);"></div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" id="ekNama" class="form-control" required placeholder="Nama ketua golongan..."></div>
+      <div class="form-group">
+        <label class="form-label">Ganti Foto (Opsional)</label>
+        <div class="file-input-wrapper"><input type="file" id="ekFoto" accept="image/*" onchange="previewImage(this,'prevKetua')"></div>
+        <img id="prevKetua" style="display:none;margin-top:8px;max-height:100px;border-radius:8px;" alt="">
+      </div>
+      <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalEditKetua')">Batal</button>
+        <button type="submit" class="btn btn-white">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: Foto Bersama Golongan -->
+<div class="modal-overlay" id="modalFotoGolongan">
+  <div class="modal">
+    <div class="modal-close" onclick="closeModal('modalFotoGolongan')">&times;</div>
+    <h2 class="modal-title" id="modalFotoGolTitle">📸 Foto Bersama Golongan</h2>
+    <p style="font-size:0.8rem;color:var(--gray-mid);margin-bottom:1rem;line-height:1.6;">Foto ditampilkan sebagai <strong>banner landscape</strong>. Gunakan foto horizontal/landscape.</p>
+    <form id="formFotoGolongan">
+      <div class="form-group">
+        <label class="form-label">Upload Foto Bersama (Landscape)</label>
+        <div class="file-input-wrapper"><input type="file" id="fgFile" accept="image/*" onchange="previewGolFoto(this)" required></div>
+      </div>
+      <div style="margin-bottom:1rem;aspect-ratio:16/5;border-radius:8px;overflow:hidden;display:none;" id="prevGolWrap">
+        <img id="prevGolImg" style="width:100%;height:100%;object-fit:cover;" alt="preview">
+      </div>
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalFotoGolongan')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnUploadGolFoto">Upload Foto</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+let _gol = '', _anggota = [], _pengurus = [], _isAdmin = false;
+
+async function loadPage() {
+  _gol = (new URLSearchParams(window.location.search).get('gol') || '').toUpperCase();
+  if (!['A','B','C','D'].includes(_gol)) { window.location.href = 'anggota.html'; return; }
+  document.title = `Golongan ${_gol} | Anggota BD 2025`;
+
+  _isAdmin = await wha_initPage('anggota_' + _gol.toLowerCase());
+
+  const [site, anggota, pengurus] = await Promise.all([
+    WHAStorage.getSiteData(),
+    WHAStorage.getAnggota(_gol),
+    WHAStorage.getPengurus(),
+  ]);
+  _anggota = anggota.slice().sort((a,b)=>(a.absen||0)-(b.absen||0));
+  _pengurus = pengurus;
+
+  const ketuaGol = pengurus.find(p => p.jabatan === 'Ketua Golongan ' + _gol) || null;
+  const golFotoVal = (site.golongan_foto || {})[_gol.toLowerCase()] || '';
+  const golFotoSrc = golFotoVal ? WHAStorage.resolveImg(golFotoVal, 'golongan') : null;
+
+  renderPage(ketuaGol, golFotoSrc, golFotoVal);
+}
+
+function renderPage(ketuaGol, golFotoSrc, golFotoVal) {
+  let bannerHtml = '';
+  if (golFotoSrc) {
+    bannerHtml = `<div class="golongan-banner" style="background-image:url('${golFotoSrc}');">
+      <div class="golongan-banner-overlay"></div>
+      <div class="golongan-banner-label">Golongan ${_gol}</div>
+      ${_isAdmin ? `<button onclick="openModal('modalFotoGolongan')" style="position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,0.55);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:5px 12px;border-radius:8px;font-size:0.72rem;cursor:pointer;backdrop-filter:blur(6px);">🖼️ Ganti Foto</button>` : ''}
+    </div>`;
+  } else if (_isAdmin) {
+    bannerHtml = `<div class="golongan-banner-empty" onclick="openModal('modalFotoGolongan')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" stroke="none"/><polyline points="21 15 16 10 5 21"/></svg>
+      <span>Belum ada foto Golongan ${_gol} — <strong>klik untuk upload foto bersama</strong></span>
+    </div>`;
+  }
+
+  let ketuaHtml = '';
+  if (ketuaGol) {
+    const kFotoSrc = ketuaGol.foto ? WHAStorage.resolveImg(ketuaGol.foto, 'pengurus') : null;
+    const kAvatar = kFotoSrc
+      ? `<img src="${kFotoSrc}" alt="" style="width:100%;height:100%;object-fit:cover;" onclick="openLightbox('${kFotoSrc}')">`
+      : `<span style="font-size:2rem;color:var(--gray-mid);font-weight:700;">${(ketuaGol.nama||'?')[0].toUpperCase()}</span>`;
+    ketuaHtml = `<div class="ketua-section">
+      ${_isAdmin ? `<button class="btn btn-sm btn-outline" onclick="openEditKetua(${ketuaGol.id})" style="position:absolute;top:1rem;right:1rem;font-size:0.72rem;padding:4px 10px;">✏️ Edit Ketua</button>` : ''}
+      <div style="width:90px;height:90px;border-radius:14px;border:2px solid rgba(255,255,255,0.2);background:var(--gray-dark);display:flex;align-items:center;justify-content:center;overflow:hidden;${kFotoSrc?'cursor:pointer':''}">${kAvatar}</div>
+      <div class="ketua-info">
+        <p class="role">Ketua Golongan ${_gol}</p>
+        <h2>${escHtml(ketuaGol.nama)}</h2>
+        <span class="badge badge-pengurus">PENGURUS</span>
+      </div>
+    </div>`;
+  } else {
+    ketuaHtml = `<div class="ketua-section" style="opacity:0.5;"><div class="ketua-info"><p class="role">Ketua Golongan ${_gol}</p><h2>Belum ditetapkan</h2></div></div>`;
+  }
+
+  const memberCards = _anggota.map(a => {
+    const fotoSrc = a.foto ? WHAStorage.resolveImg(a.foto, 'anggota') : null;
+    const avatarHtml = fotoSrc
+      ? `<img src="${fotoSrc}" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+         <span style="display:none;font-size:1.2rem;color:var(--gray-mid);font-weight:700;">${(a.nama||'?')[0].toUpperCase()}</span>`
+      : `<span style="font-size:1.2rem;color:var(--gray-mid);font-weight:700;">${(a.nama||'?')[0].toUpperCase()}</span>`;
+    const badge = a.is_pengurus ? `<span class="badge badge-pengurus" title="${escHtml(a.jabatan_pengurus)}">PENGURUS</span>` : '';
+    const adminBtns = _isAdmin ? `<button class="btn-icon btn-sm" onclick="event.stopPropagation();openEditAnggota(${a.id})" title="Edit">✏️</button>
+      <button class="btn-icon btn-sm" onclick="event.stopPropagation();hapusAnggota(${a.id})" style="color:#ff6b6b;border-color:rgba(255,107,107,0.3);" title="Hapus">🗑</button>` : '';
+    return `<div class="member-card fade-in" data-nama="${escHtml((a.nama||'').toLowerCase())}" data-nim="${escHtml(a.nim||'')}" style="cursor:pointer;" onclick="window.location.href='anggota_profil.html?id=${a.id}&gol=${_gol}'">
+      <div class="absen-num">${a.absen||''}</div>
+      <div class="member-avatar">${avatarHtml}</div>
+      <div class="member-info">
+        <div class="member-name">${escHtml(a.nama||'—')} ${badge}</div>
+        <div class="member-nim">NIM: ${escHtml(a.nim||'—')}</div>
+      </div>
+      <div style="display:flex;gap:0.3rem;flex-shrink:0;" onclick="event.stopPropagation()">
+        ${adminBtns}
+        <a href="anggota_profil.html?id=${a.id}&gol=${_gol}" class="btn-icon btn-sm" title="Lihat profil" style="font-size:0.7rem;">👤</a>
+      </div>
+    </div>`;
+  }).join('');
+
+  const empty = _anggota.length === 0 ? `<div style="text-align:center;padding:4rem;color:var(--gray-mid);"><div style="font-size:3rem;margin-bottom:1rem;">👥</div><p>Belum ada anggota di Golongan ${_gol}.</p></div>` : '';
+
+  document.getElementById('pageContent').innerHTML = `
+    ${bannerHtml}
+    <div style="margin-bottom:1.5rem;font-size:0.82rem;color:var(--gray-mid);">
+      <a href="anggota.html" style="color:var(--gray-mid);text-decoration:none;">Anggota</a>
+      <span style="margin:0 0.5rem;">›</span>
+      <span style="color:var(--white);">Golongan ${_gol}</span>
+    </div>
+    <div class="flex-between mb-3">
+      <div>
+        <p class="section-label">Golongan ${_gol}</p>
+        <h1 class="page-title">Daftar Anggota</h1>
+        <p class="page-subtitle">${_anggota.length} anggota terdaftar</p>
+      </div>
+      ${_isAdmin ? `<button class="btn btn-white" onclick="openModal('modalTambah')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tambah Anggota
+      </button>` : ''}
+    </div>
+    ${ketuaHtml}
+    <div class="search-bar"><input type="text" id="searchInput" placeholder="Cari nama atau NIM..." oninput="filterMembers()"></div>
+    <div class="member-grid" id="memberGrid">${memberCards}</div>
+    ${empty}`;
+
+  document.getElementById('modalTambahTitle').textContent = `Tambah Anggota Golongan ${_gol}`;
+  document.getElementById('modalFotoGolTitle').textContent = `📸 Foto Bersama — Golongan ${_gol}`;
+  if (document.getElementById('modalEditKetuaTitle')) document.getElementById('modalEditKetuaTitle').textContent = `Edit Ketua Golongan ${_gol}`;
+}
+
+function filterMembers() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.member-card').forEach(c => {
+    const match = (c.dataset.nama||'').includes(q) || (c.dataset.nim||'').includes(q);
+    c.style.display = match ? '' : 'none';
+  });
+}
+
+// ---- TAMBAH ANGGOTA ----
+document.getElementById('formTambah').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveTambah');
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+  const newId = await WHAStorage.nextAnggotaId(_gol);
+  const newA = {
+    id: newId, absen: parseInt(document.getElementById('tAbsen').value),
+    nim: document.getElementById('tNim').value.trim(),
+    nama: document.getElementById('tNama').value.trim(), foto: '',
+    is_pengurus: document.getElementById('tIsPengurus').value === '1',
+    jabatan_pengurus: document.getElementById('tJabatan').value.trim()
+  };
+  const fotoFile = document.getElementById('tFoto').files[0];
+  if (fotoFile) {
+    const b64 = await WHAStorage.fileToB64(fotoFile);
+    const key = `ang_${_gol.toLowerCase()}_foto_${newId}`;
+    if (WHAStorage.setImg(key, b64)) newA.foto = 'ls:' + key;
+  }
+  const arr = await WHAStorage.getAnggota(_gol);
+  arr.push(newA);
+  arr.sort((a,b)=>(a.absen||0)-(b.absen||0));
+  await WHAStorage.saveAnggota(_gol, arr);
+  _anggota = arr;
+  this.reset(); document.getElementById('prevTambah').style.display='none'; document.getElementById('tJabField').style.display='none';
+  btn.disabled=false; btn.textContent='Simpan';
+  closeModal('modalTambah');
+  showToast('Anggota ditambahkan!');
+  renderPage(_pengurus.find(p=>p.jabatan==='Ketua Golongan '+_gol)||null, null, null);
+  // re-render properly
+  loadPage();
+});
+
+// ---- EDIT ANGGOTA ----
+function openEditAnggota(id) {
+  const a = _anggota.find(x=>x.id==id);
+  if (!a) return;
+  document.getElementById('eId').value=a.id;
+  document.getElementById('eAbsen').value=a.absen||'';
+  document.getElementById('eNim').value=a.nim||'';
+  document.getElementById('eNama').value=a.nama||'';
+  document.getElementById('eIsPengurus').value=a.is_pengurus?'1':'0';
+  document.getElementById('eJabatan').value=a.jabatan_pengurus||'';
+  document.getElementById('eJabField').style.display=a.is_pengurus?'':'none';
+  document.getElementById('prevEdit').style.display='none';
+  openModal('modalEdit');
+}
+
+document.getElementById('formEdit').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn=document.getElementById('btnSaveEdit');
+  btn.disabled=true; btn.textContent='Menyimpan...';
+  const id=parseInt(document.getElementById('eId').value);
+  const arr=await WHAStorage.getAnggota(_gol);
+  const idx=arr.findIndex(x=>x.id==id);
+  if(idx!==-1){
+    arr[idx].absen=parseInt(document.getElementById('eAbsen').value);
+    arr[idx].nim=document.getElementById('eNim').value.trim();
+    arr[idx].nama=document.getElementById('eNama').value.trim();
+    arr[idx].is_pengurus=document.getElementById('eIsPengurus').value==='1';
+    arr[idx].jabatan_pengurus=document.getElementById('eJabatan').value.trim();
+    const ff=document.getElementById('eFoto').files[0];
+    if(ff){const b64=await WHAStorage.fileToB64(ff);const key=`ang_${_gol.toLowerCase()}_foto_${id}`;if(WHAStorage.setImg(key,b64))arr[idx].foto='ls:'+key;}
+  }
+  arr.sort((a,b)=>(a.absen||0)-(b.absen||0));
+  await WHAStorage.saveAnggota(_gol,arr);
+  _anggota=arr;
+  btn.disabled=false; btn.textContent='Update';
+  closeModal('modalEdit');
+  showToast('Data diupdate!');
+  loadPage();
+});
+
+function hapusAnggota(id) {
+  const a=_anggota.find(x=>x.id==id);
+  confirmDelete('Hapus anggota '+(a?a.nama:'ini')+'?', async()=>{
+    const arr=(await WHAStorage.getAnggota(_gol)).filter(x=>x.id!=id);
+    WHAStorage.delImg(`ang_${_gol.toLowerCase()}_foto_${id}`);
+    await WHAStorage.saveAnggota(_gol,arr);
+    _anggota=arr;
+    closeModal('modalEdit');
+    showToast('Anggota dihapus!');
+    loadPage();
+  });
+}
+
+function hapusAnggotaById(){hapusAnggota(parseInt(document.getElementById('eId').value));}
+
+// ---- EDIT KETUA GOLONGAN ----
+function openEditKetua(id) {
+  const p=_pengurus.find(x=>x.id==id);
+  if(!p) return;
+  document.getElementById('ekId').value=p.id;
+  document.getElementById('ekJabatan').value=p.jabatan;
+  document.getElementById('ekNama').value=p.nama||'';
+  document.getElementById('prevKetua').style.display='none';
+  openModal('modalEditKetua');
+}
+
+document.getElementById('formEditKetua').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const id=parseInt(document.getElementById('ekId').value);
+  const arr=await WHAStorage.getPengurus();
+  const idx=arr.findIndex(x=>x.id==id);
+  if(idx!==-1){
+    arr[idx].nama=document.getElementById('ekNama').value.trim();
+    const ff=document.getElementById('ekFoto').files[0];
+    if(ff){const b64=await WHAStorage.fileToB64(ff);const key=`peng_foto_${id}`;if(WHAStorage.setImg(key,b64))arr[idx].foto='ls:'+key;}
+  }
+  await WHAStorage.savePengurus(arr);
+  _pengurus=arr;
+  closeModal('modalEditKetua');
+  showToast('Ketua golongan diupdate!');
+  loadPage();
+});
+
+// ---- FOTO BERSAMA GOLONGAN ----
+function previewGolFoto(input){
+  if(!input.files[0]) return;
+  const r=new FileReader();
+  r.onload=e=>{document.getElementById('prevGolImg').src=e.target.result;document.getElementById('prevGolWrap').style.display='block';};
+  r.readAsDataURL(input.files[0]);
+}
+
+document.getElementById('formFotoGolongan').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn=document.getElementById('btnUploadGolFoto');
+  btn.disabled=true; btn.textContent='Mengupload...';
+  const file=document.getElementById('fgFile').files[0];
+  if(!file){showToast('Pilih file foto.','error');btn.disabled=false;btn.textContent='Upload Foto';return;}
+  const b64=await WHAStorage.fileToB64(file);
+  const key=`gol_foto_${_gol.toLowerCase()}`;
+  if(!WHAStorage.setImg(key,b64)){showToast('Gagal: storage penuh.','error');btn.disabled=false;btn.textContent='Upload Foto';return;}
+  const site=await WHAStorage.getSiteData();
+  if(!site.golongan_foto) site.golongan_foto={};
+  site.golongan_foto[_gol.toLowerCase()]='ls:'+key;
+  await WHAStorage.saveSiteData(site);
+  showToast('Foto bersama berhasil diupload!');
+  closeModal('modalFotoGolongan');
+  setTimeout(()=>location.reload(),900);
+});
+
+loadPage();
+</script>
+</body>
+</html>

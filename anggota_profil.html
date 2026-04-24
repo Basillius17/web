@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Anggota | BD 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .profil-wrapper{display:grid;grid-template-columns:280px 1fr;gap:2rem;align-items:start;}
+    @media(max-width:768px){.profil-wrapper{grid-template-columns:1fr;}}
+    .profil-card{background:var(--black-3);border:1px solid var(--border);border-radius:20px;padding:2rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem;position:sticky;top:84px;}
+    .profil-avatar{width:140px;height:140px;border-radius:20px;background:var(--gray-dark);border:2px solid var(--border-hover);overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:var(--transition);}
+    .profil-avatar:hover{border-color:rgba(255,255,255,0.5);}
+    .profil-avatar img{width:100%;height:100%;object-fit:cover;}
+    .profil-initial{font-size:3.5rem;font-weight:800;color:var(--gray-mid);letter-spacing:-0.04em;}
+    .profil-name{font-size:1.15rem;font-weight:800;text-align:center;letter-spacing:-0.01em;}
+    .profil-nim{font-size:0.78rem;color:var(--gray-mid);font-weight:500;}
+    .color-swatch{display:inline-flex;align-items:center;gap:0.6rem;background:var(--black-2);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:0.8rem;font-weight:600;color:var(--white-dim);}
+    .color-dot{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;}
+    .ig-link{display:inline-flex;align-items:center;gap:0.5rem;color:var(--white-dim);text-decoration:none;font-size:0.82rem;font-weight:500;padding:7px 14px;background:var(--black-2);border:1px solid var(--border);border-radius:20px;transition:var(--transition);width:100%;justify-content:center;}
+    .ig-link:hover{border-color:rgba(200,100,255,0.5);color:#e879f9;background:rgba(200,100,255,0.05);}
+    .info-blk{background:var(--black-3);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:var(--transition);position:relative;}
+    .info-blk:hover{border-color:var(--border-hover);}
+    .info-label{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.5rem;}
+    .info-value{font-size:1rem;font-weight:600;color:var(--white);line-height:1.5;}
+    .info-empty{font-size:0.82rem;color:var(--gray-mid);font-style:italic;}
+    .absen-badge{display:inline-flex;align-items:center;background:var(--gray-dark);border:1px solid var(--border);border-radius:8px;padding:3px 10px;font-size:0.72rem;font-weight:700;color:var(--gray-light);}
+    .breadcrumb{font-size:0.82rem;color:var(--gray-mid);margin-bottom:1.5rem;display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;}
+    .breadcrumb a{color:var(--gray-mid);text-decoration:none;} .breadcrumb a:hover{color:var(--white);}
+    .edit-profil-btn{position:fixed;bottom:1.2rem;right:1.2rem;z-index:8000;background:var(--white);color:var(--black);border:none;border-radius:24px;padding:10px 20px;font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:all 0.2s;display:flex;align-items:center;gap:0.5rem;}
+    .edit-profil-btn:hover{transform:scale(1.04);box-shadow:0 6px 30px rgba(0,0,0,0.5);}
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a class="brand" href="index.html">BD <span class="year-badge">2025</span></a>
+    <span class="navbar-subtitle">Bisnis Digital &middot; Jurusan Bisnis<br>Politeknik Negeri Jember</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.5rem;" id="navRight">
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <nav id="navMenu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="pengurus.html">Pengurus</a>
+    <a href="anggota.html" class="active">Anggota</a>
+    <a href="foto.html">Foto</a>
+    <a href="projek.html">Projek</a>
+  </nav>
+</nav>
+
+<div class="page-wrapper">
+  <div class="section">
+    <div id="pageContent"><div style="text-align:center;padding:4rem;color:var(--gray-mid);">⏳ Memuat profil...</div></div>
+  </div>
+</div>
+
+<!-- MODAL: Edit Profil -->
+<div class="modal-overlay" id="modalEditProfil">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-close" onclick="closeModal('modalEditProfil')">&times;</div>
+    <h2 class="modal-title">✏️ Edit Profil Anggota</h2>
+    <form id="formEditProfil">
+      <input type="hidden" id="epId">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <div class="form-group"><label class="form-label">No. Absen</label><input type="number" id="epAbsen" class="form-control" min="1" required></div>
+        <div class="form-group"><label class="form-label">NIM</label><input type="text" id="epNim" class="form-control" required></div>
+      </div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" id="epNama" class="form-control" required></div>
+      <div class="form-group"><label class="form-label">Tempat, Tanggal Lahir</label><input type="text" id="epTtl" class="form-control" placeholder="Contoh: Jember, 1 Januari 2006"></div>
+      <div class="form-group"><label class="form-label">Username Instagram <span style="color:var(--gray-mid);font-weight:400;">(tanpa @)</span></label><input type="text" id="epIg" class="form-control" placeholder="contoh: username_ig"></div>
+      <div class="form-group"><label class="form-label">URL Instagram</label><input type="url" id="epIgUrl" class="form-control" placeholder="https://instagram.com/..."></div>
+      <div class="form-group"><label class="form-label">Warna Favorit <span style="color:var(--gray-mid);font-weight:400;">(nama/hex)</span></label><input type="text" id="epWarna" class="form-control" placeholder="Contoh: Biru Langit, #4FC3F7"><input type="color" id="epWarnaColor" style="margin-top:6px;height:32px;width:100%;border:none;border-radius:6px;background:none;cursor:pointer;" oninput="document.getElementById('epWarna').value=this.value"></div>
+      <div class="form-group"><label class="form-label">Kata-kata / Quotes</label><textarea id="epQuotes" class="form-control" rows="3" placeholder="Tulis quotes atau motto pribadi..."></textarea></div>
+      <div class="form-group">
+        <label class="form-label">Ganti Foto Profil (Opsional)</label>
+        <div class="file-input-wrapper"><input type="file" id="epFoto" accept="image/*" onchange="previewImage(this,'prevEp')"></div>
+        <img id="prevEp" style="display:none;margin-top:8px;max-height:120px;border-radius:8px;border:1px solid var(--border);object-fit:cover;" alt="">
+      </div>
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalEditProfil')">Batal</button>
+        <button type="submit" class="btn btn-white" id="btnSaveEp">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+let _anggota = [], _a = null, _gol = '', _isAdmin = false;
+
+function getParam(n){ return new URLSearchParams(window.location.search).get(n); }
+
+async function loadPage() {
+  const id=parseInt(getParam('id')||'0');
+  _gol=(getParam('gol')||'').toUpperCase();
+  if(!id||!['A','B','C','D'].includes(_gol)){ window.location.href='anggota.html'; return; }
+
+  _isAdmin = await wha_initPage('anggota_' + _gol.toLowerCase());
+  const anggota = await WHAStorage.getAnggota(_gol);
+  _anggota = anggota;
+  _a = anggota.find(x=>x.id==id);
+  if(!_a){ window.location.href='anggota.html'; return; }
+
+  document.title = `${_a.nama} | Golongan ${_gol} | BD 2025`;
+  renderProfil();
+}
+
+function renderProfil() {
+  const a = _a;
+  const fotoSrc = a.foto ? WHAStorage.resolveImg(a.foto,'anggota') : null;
+  const init = (a.nama||'?')[0].toUpperCase();
+
+  const avatarHtml = fotoSrc
+    ? `<div class="profil-avatar" onclick="openLightbox('${fotoSrc}')"><img src="${fotoSrc}" alt="Foto ${escHtml(a.nama)}" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\\'profil-initial\\'>${init}</span>';"></div>`
+    : `<div class="profil-avatar" style="cursor:default;"><span class="profil-initial">${init}</span></div>`;
+
+  const warnaFav = a.warna_favorit||'';
+  const warnaHtml = warnaFav
+    ? `<div class="color-swatch"><span class="color-dot" style="background:${escHtml(warnaFav)};"></span>${escHtml(warnaFav)}</div>` : '';
+
+  const igNama = a.instagram||'';
+  const igUrl  = a.instagram_url||'';
+  const igLinkHtml = igNama
+    ? `<a href="${igUrl||'#'}" target="${igUrl?'_blank':'_self'}" class="ig-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        @${escHtml(igNama)}</a>` : '';
+
+  const pengurusBadge = a.is_pengurus ? `<span class="badge badge-pengurus">${escHtml(a.jabatan_pengurus||'PENGURUS')}</span>` : '';
+
+  document.getElementById('pageContent').innerHTML = `
+    <div class="breadcrumb">
+      <a href="anggota.html">Anggota</a><span>›</span>
+      <a href="anggota_golongan.html?gol=${_gol}">Golongan ${_gol}</a><span>›</span>
+      <span style="color:var(--white);">${escHtml(a.nama)}</span>
+    </div>
+    <div class="profil-wrapper">
+      <div class="profil-card fade-in">
+        ${avatarHtml}
+        <div class="profil-name">${escHtml(a.nama)}</div>
+        <div class="profil-nim">NIM: ${escHtml(a.nim||'—')}</div>
+        <div class="absen-badge">No. Absen ${a.absen||'—'} · Gol. ${_gol}</div>
+        ${pengurusBadge}${warnaHtml}${igLinkHtml}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+        <div class="info-blk fade-in"><div class="info-label">🎂 Tempat, Tanggal Lahir</div>
+          ${a.ttl ? `<div class="info-value">${escHtml(a.ttl)}</div>` : '<div class="info-empty">Belum diisi</div>'}</div>
+        <div class="info-blk fade-in"><div class="info-label">📸 Instagram</div>
+          ${igNama ? `<div class="info-value">@${escHtml(igNama)}${igUrl?` <a href="${igUrl}" target="_blank" style="margin-left:0.8rem;font-size:0.75rem;color:var(--gray-mid);text-decoration:none;border:1px solid var(--border);padding:2px 8px;border-radius:10px;">Buka ↗</a>`:''}` : '<div class="info-empty">Belum diisi</div>'}</div>
+        <div class="info-blk fade-in"><div class="info-label">🎨 Warna Favorit</div>
+          ${warnaFav ? `<div class="info-value" style="display:flex;align-items:center;gap:0.8rem;"><span class="color-dot" style="background:${escHtml(warnaFav)};width:24px;height:24px;"></span>${escHtml(warnaFav)}</div>` : '<div class="info-empty">Belum diisi</div>'}</div>
+        <div class="info-blk fade-in"><div class="info-label">💬 Kata-kata / Quotes</div>
+          ${a.quotes ? `<div class="info-value" style="font-style:italic;color:var(--white-dim);line-height:1.7;">"${escHtml(a.quotes)}"</div>` : '<div class="info-empty">Belum diisi</div>'}</div>
+      </div>
+    </div>`;
+
+  if (_isAdmin) {
+    const btn = document.createElement('button');
+    btn.className = 'edit-profil-btn';
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit Profil`;
+    btn.onclick = openEditProfil;
+    document.body.appendChild(btn);
+  }
+}
+
+function openEditProfil() {
+  const a=_a;
+  document.getElementById('epId').value=a.id;
+  document.getElementById('epAbsen').value=a.absen||'';
+  document.getElementById('epNim').value=a.nim||'';
+  document.getElementById('epNama').value=a.nama||'';
+  document.getElementById('epTtl').value=a.ttl||'';
+  document.getElementById('epIg').value=a.instagram||'';
+  document.getElementById('epIgUrl').value=a.instagram_url||'';
+  document.getElementById('epWarna').value=a.warna_favorit||'';
+  document.getElementById('epQuotes').value=a.quotes||'';
+  document.getElementById('prevEp').style.display='none';
+  openModal('modalEditProfil');
+}
+
+document.getElementById('formEditProfil').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('btnSaveEp');
+  btn.disabled=true; btn.textContent='Menyimpan...';
+  const id=parseInt(document.getElementById('epId').value);
+  const arr=await WHAStorage.getAnggota(_gol);
+  const idx=arr.findIndex(x=>x.id==id);
+  if(idx!==-1){
+    arr[idx].absen=parseInt(document.getElementById('epAbsen').value)||arr[idx].absen;
+    arr[idx].nim=document.getElementById('epNim').value.trim();
+    arr[idx].nama=document.getElementById('epNama').value.trim();
+    arr[idx].ttl=document.getElementById('epTtl').value.trim();
+    arr[idx].instagram=document.getElementById('epIg').value.trim();
+    arr[idx].instagram_url=document.getElementById('epIgUrl').value.trim();
+    arr[idx].warna_favorit=document.getElementById('epWarna').value.trim();
+    arr[idx].quotes=document.getElementById('epQuotes').value.trim();
+    const ff=document.getElementById('epFoto').files[0];
+    if(ff){const b64=await WHAStorage.fileToB64(ff);const key=`ang_${_gol.toLowerCase()}_foto_${id}`;if(WHAStorage.setImg(key,b64))arr[idx].foto='ls:'+key;}
+  }
+  await WHAStorage.saveAnggota(_gol,arr);
+  _anggota=arr; _a=arr.find(x=>x.id==id);
+  btn.disabled=false; btn.textContent='Simpan Perubahan';
+  closeModal('modalEditProfil');
+  showToast('Profil berhasil diperbarui!');
+  renderProfil();
+});
+
+loadPage();
+</script>
+</body>
+</html>

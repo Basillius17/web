@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anggota Angkatan | Bisnis Digital 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .golongan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.2rem;}
+    .golongan-card{background:var(--black-3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2.5rem 1.5rem;text-align:center;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:0.8rem;transition:var(--transition);}
+    .golongan-card:hover{border-color:var(--border-hover);background:var(--gray-dark);transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+    .golongan-letter{font-size:5rem;font-weight:900;letter-spacing:-0.05em;color:var(--white);line-height:1;}
+    .golongan-label{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray-mid);font-weight:600;}
+    .golongan-count{font-size:0.82rem;color:var(--gray-light);}
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a class="brand" href="index.html">BD <span class="year-badge">2025</span></a>
+    <span class="navbar-subtitle">Bisnis Digital &middot; Jurusan Bisnis<br>Politeknik Negeri Jember</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.5rem;" id="navRight">
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+  <nav id="navMenu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="pengurus.html">Pengurus</a>
+    <a href="anggota.html" class="active">Anggota</a>
+    <a href="foto.html">Foto</a>
+    <a href="projek.html">Projek</a>
+  </nav>
+</nav>
+
+<div class="page-wrapper">
+  <div class="section">
+    <p class="section-label">Anggota</p>
+    <h1 class="page-title">Anggota Angkatan</h1>
+    <p class="page-subtitle">Pilih golongan untuk melihat daftar anggota</p>
+    <div class="golongan-grid" id="golonganGrid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-mid);"><p>⏳ Memuat data...</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+async function loadPage() {
+  await wha_initPage('anggota');
+  const [angA, angB, angC, angD] = await Promise.all([
+    WHAStorage.getAnggota('A'), WHAStorage.getAnggota('B'),
+    WHAStorage.getAnggota('C'), WHAStorage.getAnggota('D'),
+  ]);
+  const counts = { A: angA.length, B: angB.length, C: angC.length, D: angD.length };
+  document.getElementById('golonganGrid').innerHTML = ['A','B','C','D'].map(g => `
+    <a href="anggota_golongan.html?gol=${g}" class="golongan-card fade-in">
+      <div class="golongan-letter">${g}</div>
+      <div class="golongan-label">Golongan ${g}</div>
+      <div class="golongan-count">${counts[g]} Anggota</div>
+    </a>`).join('');
+}
+loadPage();
+</script>
+</body>
+</html>
